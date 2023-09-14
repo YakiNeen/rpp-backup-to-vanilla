@@ -1,18 +1,21 @@
 RedsHouse1FObject:
-	db $a ; border block
+	db $0A ; border block
 
-	db 3 ; warps
-	warp 2, 7, 0, -1 ; exit1
-	warp 3, 7, 0, -1 ; exit2
-	warp 7, 1, 0, REDS_HOUSE_2F ; staircase
+	db $3 ; warps
+	db $7, $2, $0, $FF ; exit1
+	db $7, $3, $0, $FF ; exit2
+	db $0, $7, $0, REDS_HOUSE_2F ; staircase
 
-	db 1 ; signs
-	sign 3, 1, 2 ; TV
+	db $4 ; signs
+	db $1, $5, $2 ; TV
+	db $1, $2, $3 ; Fridge
+	db $1, $0, $4 ; Stove
+	db $1, $1, $5 ; Sink
 
-	db 1 ; objects
-	object SPRITE_MOM, 5, 4, STAY, LEFT, 1 ; Mom
+	db $1 ; objects
+	object SPRITE_MOM, $5, $4, $FF, $D2, $1 ; Mom
 
 	; warp-to
-	warp_to 2, 7, REDS_HOUSE_1F_WIDTH
-	warp_to 3, 7, REDS_HOUSE_1F_WIDTH
-	warp_to 7, 1, REDS_HOUSE_1F_WIDTH
+	EVENT_DISP REDS_HOUSE_1F_WIDTH, $7, $2
+	EVENT_DISP REDS_HOUSE_1F_WIDTH, $7, $3
+	EVENT_DISP REDS_HOUSE_1F_WIDTH, $0, $7

@@ -1,27 +1,35 @@
 Route9Mons:
+IF DEF(_HARD) ; Difficult Rom
+; Grass Mons
 	db $0F
-	IF DEF(_RED)
-		db 16,RATTATA
-		db 16,SPEAROW
-		db 14,RATTATA
-		db 11,EKANS
-		db 13,SPEAROW
-		db 15,EKANS
-		db 17,RATTATA
-		db 17,SPEAROW
-		db 13,EKANS
-		db 17,EKANS
-	ENDC
-	IF DEF(_BLUE)
-		db 16,RATTATA
-		db 16,SPEAROW
-		db 14,RATTATA
-		db 11,SANDSHREW
-		db 13,SPEAROW
-		db 15,SANDSHREW
-		db 17,RATTATA
-		db 17,SPEAROW
-		db 13,SANDSHREW
-		db 17,SANDSHREW
-	ENDC
+	db 21,EKANS
+	db 21,SANDSHREW
+	db 19,NIDORAN_M
+	db 19,NIDORAN_F
+	db 20,SPEAROW
+	db 22,FEAROW
+	db 19,CUBONE
+	db 18,VENONAT
+	db 23,MAROWAK
+	db 22,VENOMOTH
+
+; Water Mons
 	db $00
+
+ELSE ; Normal Rom
+; Grass Mons
+	db $0F
+	db 16,EKANS
+	db 16,SANDSHREW
+	db 14,NIDORAN_M
+	db 14,NIDORAN_F
+	db 15,SPEAROW
+	db 17,FEAROW
+	db 14,CUBONE
+	db 13,VENONAT
+	db 18,MAROWAK
+	db 17,VENOMOTH
+
+; Water Mons
+	db $00
+ENDC

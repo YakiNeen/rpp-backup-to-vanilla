@@ -13,6 +13,24 @@ PewterCityScriptPointers:
 	dw PewterCityScript5
 	dw PewterCityScript6
 
+PewterCityTextPointers:
+	dw PewterCityText1
+	dw PewterCityText2
+	dw PewterCityText3
+	dw PewterCityText4
+	dw PewterCityText5
+	dw PewterCityTree1
+	dw PewterCityTree2
+	dw PewterCityText6
+	dw PewterCityText7
+	dw MartSignText
+	dw PokeCenterSignText
+	dw PewterCityText10
+	dw PewterCityText11
+	dw PewterCityText12
+	dw PewterCityText13
+	dw PewterCityText14
+   
 PewterCityScript0:
 	xor a
 	ld [wMuseum1fCurScript], a
@@ -54,7 +72,7 @@ PewterCityScript1:
 	call PlayDefaultMusic
 	ld hl, wFlags_0xcd60
 	set 4, [hl]
-	ld a, $d
+	ld a, $f
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, $3c
@@ -122,7 +140,7 @@ PewterCityScript4:
 	call PlayDefaultMusic
 	ld hl, wFlags_0xcd60
 	set 4, [hl]
-	ld a, $e
+	ld a, $10
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	ld a, $3c
@@ -175,22 +193,6 @@ PewterCityScript6:
 	ld a, $0
 	ld [wPewterCityCurScript], a
 	ret
-
-PewterCityTextPointers:
-	dw PewterCityText1
-	dw PewterCityText2
-	dw PewterCityText3
-	dw PewterCityText4
-	dw PewterCityText5
-	dw PewterCityText6
-	dw PewterCityText7
-	dw MartSignText
-	dw PokeCenterSignText
-	dw PewterCityText10
-	dw PewterCityText11
-	dw PewterCityText12
-	dw PewterCityText13
-	dw PewterCityText14
 
 PewterCityText1:
 	TX_FAR _PewterCityText1
@@ -320,3 +322,17 @@ PewterCityText11:
 PewterCityText12:
 	TX_FAR _PewterCityText12
 	db "@"
+
+PewterCityTree1:
+	TX_ASM
+	ld a, 3 ; tree number
+	ld [wWhichTrade],a
+	callba BerryTreeScript
+	jp TextScriptEnd
+	
+PewterCityTree2:
+	TX_ASM
+	ld a, 4 ; tree number
+	ld [wWhichTrade],a
+	callba BerryTreeScript
+	jp TextScriptEnd

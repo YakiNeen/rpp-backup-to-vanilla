@@ -1,4 +1,8 @@
 DisplayTownMap:
+	ld a, [hTilesetType]
+	push af
+	xor a
+	ld [hTilesetType], a
 	call LoadTownMap
 	ld hl, wUpdateSpritesEnabled
 	ld a, [hl]
@@ -11,6 +15,9 @@ DisplayTownMap:
 	push af
 	ld b, $0
 	call DrawPlayerOrBirdSprite ; player sprite
+	coord hl, 0, 0
+	ld a, $3f ; up/down arrow tile
+	ld [hl], a
 	coord hl, 1, 0
 	ld de, wcd6d
 	call PlaceString
@@ -28,8 +35,8 @@ DisplayTownMap:
 	jr .enterLoop
 
 .townMapLoop
-	coord hl, 0, 0
-	lb bc, 1, 20
+	coord hl, 1, 0
+	lb bc, 2, 11
 	call ClearScreenArea
 	ld hl, TownMapOrder
 	ld a, [wWhichTownMapLocation]
@@ -37,10 +44,9 @@ DisplayTownMap:
 	ld b, 0
 	add hl, bc
 	ld a, [hl]
-.enterLoop
-	ld de, wTownMapCoords
+
+.enterLoop:
 	call LoadTownMapEntry
-	ld a, [de]
 	push hl
 	call TownMapCoordsToOAMCoords
 	ld a, $4
@@ -53,7 +59,7 @@ DisplayTownMap:
 	ld a, [hli]
 	ld [de], a
 	inc de
-	cp $50
+	cp "@"
 	jr nz, .copyMapName
 	coord hl, 1, 0
 	ld de, wcd6d
@@ -83,6 +89,8 @@ DisplayTownMap:
 	pop hl
 	pop af
 	ld [hl], a
+	pop af
+	ld [hTilesetType], a
 	ret
 .pressedUp
 	ld a, [wWhichTownMapLocation]
@@ -110,6 +118,10 @@ TownMapCursor:
 TownMapCursorEnd:
 
 LoadTownMap_Nest:
+	ld a, [hTilesetType]
+	push af
+	xor a
+	ld [hTilesetType], a
 	call LoadTownMap
 	ld hl, wUpdateSpritesEnabled
 	ld a, [hl]
@@ -122,19 +134,31 @@ LoadTownMap_Nest:
 	call PlaceString
 	ld h, b
 	ld l, c
-	ld de, MonsNestText
+	ld de, MonsText
+	call PlaceString
+	coord hl, 1, 1
+	ld de, NestText
 	call PlaceString
 	call WaitForTextScrollButtonPress
 	call ExitTownMap
 	pop hl
 	pop af
 	ld [hl], a
+	pop af
+	ld [hTilesetType], a
 	ret
 
-MonsNestText:
-	db "'s NEST@"
+MonsText:
+	db "'s@"
+
+NestText:
+	db "Nest@"
 
 LoadTownMap_Fly:
+	ld a, [hTilesetType]
+	push af
+	xor a
+	ld [hTilesetType], a
 	call ClearSprites
 	call LoadTownMap
 	call LoadPlayerSpriteGraphics
@@ -154,8 +178,8 @@ LoadTownMap_Fly:
 	ld [hl], $ff
 	push hl
 	coord hl, 0, 0
-	ld de, ToText
-	call PlaceString
+	ld a, $3f ; up/down arrow tile
+	ld [hl], a
 	ld a, [wCurMap]
 	ld b, $0
 	call DrawPlayerOrBirdSprite
@@ -166,22 +190,18 @@ LoadTownMap_Fly:
 	ld [de], a
 	push hl
 	push hl
-	coord hl, 3, 0
-	lb bc, 1, 15
+	coord hl, 1, 0
+	lb bc, 2, 11
 	call ClearScreenArea
 	pop hl
 	ld a, [hl]
 	ld b, $4
 	call DrawPlayerOrBirdSprite ; draw bird sprite
-	coord hl, 3, 0
+	coord hl, 1, 0
 	ld de, wcd6d
 	call PlaceString
 	ld c, 15
 	call DelayFrames
-	coord hl, 18, 0
-	ld [hl], "▲"
-	coord hl, 19, 0
-	ld [hl], "▼"
 	pop hl
 .inputLoop
 	push hl
@@ -217,6 +237,8 @@ LoadTownMap_Fly:
 	pop hl
 	pop af
 	ld [hl], a
+	pop af
+	ld [hTilesetType], a
 	ret
 .pressedUp
 	coord de, 18, 0
@@ -243,16 +265,13 @@ LoadTownMap_Fly:
 	ld hl, wFlyLocationsList + 11
 	jr .pressedDown
 
-ToText:
-	db "To@"
-
 BuildFlyLocationsList:
 	ld hl, wFlyLocationsList - 1
 	ld [hl], $ff
 	inc hl
-	ld a, [wTownVisitedFlag]
+	ld a, [wKantoTownVisitedFlag]
 	ld e, a
-	ld a, [wTownVisitedFlag + 1]
+	ld a, [wKantoTownVisitedFlag + 1]
 	ld d, a
 	ld bc, SAFFRON_CITY + 1
 .loop
@@ -284,7 +303,7 @@ LoadTownMap:
 	call TextBoxBorder
 	call DisableLCD
 	ld hl, WorldMapTileGraphics
-	ld de, vChars2 + $600
+    ld de, vChars2
 	ld bc, WorldMapTileGraphicsEnd - WorldMapTileGraphics
 	ld a, BANK(WorldMapTileGraphics)
 	call FarCopyData2
@@ -292,27 +311,13 @@ LoadTownMap:
 	ld de, vSprites + $40
 	ld bc, MonNestIconEnd - MonNestIcon
 	ld a, BANK(MonNestIcon)
-	call FarCopyDataDouble
-	coord hl, 0, 0
-	ld de, CompressedMap
-.nextTile
-	ld a, [de]
-	and a
-	jr z, .done
-	ld b, a
-	and $f
-	ld c, a
-	ld a, b
-	swap a
-	and $f
-	add $60
-.writeRunLoop
-	ld [hli], a
-	dec c
-	jr nz, .writeRunLoop
-	inc de
-	jr .nextTile
-.done
+	call FarCopyData2
+	
+	ld hl, UncompressedMap
+	ld de, wTileMap
+	ld bc, UncompressedMapEnd - UncompressedMap
+	call CopyData
+
 	call EnableLCD
 	ld b, SET_PAL_TOWN_MAP
 	call RunPaletteCommand
@@ -324,9 +329,10 @@ LoadTownMap:
 	ld [wTownMapSpriteBlinkingEnabled], a
 	ret
 
-CompressedMap:
-; you can decompress this file with the redrle program in the extras/ dir
-	INCBIN "gfx/town_map.rle"
+UncompressedMap: ; Uses the Gen 2 format
+    INCBIN "gfx/tilemaps/kanto_map.kmp"
+UncompressedMapEnd:
+; TODO: Add the map for Johto and Shamouti later
 
 ExitTownMap:
 ; clear town map graphics data and load usual graphics data
@@ -337,6 +343,7 @@ ExitTownMap:
 	call ClearSprites
 	call LoadPlayerSpriteGraphics
 	call LoadFontTilePatterns
+    call ReloadMapData ; added
 	call UpdateSprites
 	jp RunDefaultPaletteCommand
 
@@ -347,9 +354,7 @@ DrawPlayerOrBirdSprite:
 	ld a, b
 	ld [wOAMBaseTile], a
 	pop af
-	ld de, wTownMapCoords
 	call LoadTownMapEntry
-	ld a, [de]
 	push hl
 	call TownMapCoordsToOAMCoords
 	call WritePlayerOrBirdSpriteOAM
@@ -370,7 +375,7 @@ DisplayWildLocations:
 	callba FindWildLocationsOfMon
 	call ZeroOutDuplicatesInList
 	ld hl, wOAMBuffer
-	ld de, wTownMapCoords
+	ld de, wBuffer
 .loop
 	ld a, [de]
 	cp $ff
@@ -379,10 +384,11 @@ DisplayWildLocations:
 	jr z, .nextEntry
 	push hl
 	call LoadTownMapEntry
+	lb hl, -5, -4
+	add hl, bc
+	ld b, h
+	ld c, l
 	pop hl
-	ld a, [de]
-	cp $19 ; Cerulean Cave's coordinates
-	jr z, .nextEntry ; skip Cerulean Cave
 	call TownMapCoordsToOAMCoords
 	ld a, $4 ; nest icon tile no.
 	ld [hli], a
@@ -415,23 +421,14 @@ DisplayWildLocations:
 	jp CopyData
 
 AreaUnknownText:
-	db " AREA UNKNOWN@"
+	db " Area unknown@"
 
 TownMapCoordsToOAMCoords:
-; in: lower nybble of a = x, upper nybble of a = y
-; out: b and [hl] = (y * 8) + 24, c and [hl+1] = (x * 8) + 24
-	push af
-	and $f0
-	srl a
-	add 24
-	ld b, a
+; in: b = y, c = x
+; out: [hl] = y, [hl + 1] = x
+	ld a, b
 	ld [hli], a
-	pop af
-	and $f
-	swap a
-	srl a
-	add 24
-	ld c, a
+	ld a, c
 	ld [hli], a
 	ret
 
@@ -445,14 +442,47 @@ WritePlayerOrBirdSpriteOAM:
 WriteTownMapSpriteOAM:
 	push hl
 
-; Subtract 4 from c (X coord) and 4 from b (Y coord). However, the carry from c
-; is added to b, so the net result is that only 3 is subtracted from b.
-	lb hl, -4, -4
+; Adjust the coords so the sprite is lined up properly
+	lb hl, -9, -8
 	add hl, bc
 
 	ld b, h
 	ld c, l
 	pop hl
+	lb de, 2, 2
+.loop
+	push de
+	push bc
+.innerLoop
+	ld a, b
+	ld [hli], a
+	ld a, c
+	ld [hli], a
+	ld a, [wOAMBaseTile]
+	ld [hli], a
+	inc a
+	ld [wOAMBaseTile], a
+	ld a, [wPlayerGender]
+	and a ; Are you a boy? Or a girl?
+	ld a, PAL_OW_GREEN
+	jr nz, .gotPal
+	xor a ; ld a, PAL_OW_RED
+.gotPal
+	ld [hli], a
+	inc d
+	ld a, 8
+	add c
+	ld c, a
+	dec e
+	jr nz, .innerLoop
+	pop bc
+	pop de
+	ld a, 8
+	add b
+	ld b, a
+	dec d
+	jr nz, .loop
+	ret
 
 WriteAsymmetricMonPartySpriteOAM:
 ; Writes 4 OAM blocks for a helix mon party sprite, since it does not have
@@ -554,14 +584,15 @@ ZeroOutDuplicatesInList:
 
 LoadTownMapEntry:
 ; in: a = map number
-; out: lower nybble of [de] = x, upper nybble of [de] = y, hl = address of name
+; out: b = y, c = x, hl = address of name
 	cp REDS_HOUSE_1F
 	jr c, .external
-	ld bc, 4
+	ld bc, 5
 	ld hl, InternalMapEntries
 .loop
 	cp [hl]
 	jr c, .foundEntry
+	jr z, .foundEntry ; works on exact entry too
 	add hl, bc
 	jr .loop
 .foundEntry
@@ -574,9 +605,12 @@ LoadTownMapEntry:
 	add hl, bc
 	add hl, bc
 	add hl, bc
+	add hl, bc
 .readEntry
 	ld a, [hli]
-	ld [de], a
+	ld b, a
+	ld a, [hli]
+	ld c, a
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
@@ -587,7 +621,7 @@ INCLUDE "data/town_map_entries.asm"
 INCLUDE "text/map_names.asm"
 
 MonNestIcon:
-	INCBIN "gfx/mon_nest_icon.1bpp"
+	INCBIN "gfx/mon_nest_icon.2bpp"
 MonNestIconEnd:
 
 TownMapSpriteBlinkingAnimation:

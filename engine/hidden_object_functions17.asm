@@ -151,10 +151,10 @@ LinkCableHelpText2:
 	db "@"
 
 HowToLinkText:
-	db   "HOW TO LINK"
-	next "COLOSSEUM"
-	next "TRADE CENTER"
-	next "STOP READING@"
+	db   "How to Link"
+	next "Colosseum"
+	next "Trade Center"
+	next "Stop reading@"
 
 LinkCableInfoTexts:
 	dw LinkCableInfoText1
@@ -275,7 +275,7 @@ StatusAilmentText1:
 StatusAilmentText2:
 	db   " BRN"
 	next " FRZ"
-	next " QUIT@@"
+	next " Quit@@"
 
 ViridianBlackboardStatusPointers:
 	dw ViridianBlackboardSleepText
@@ -473,3 +473,10 @@ VermilionGymTrashFailText:
 	call PlaySound
 	call WaitForSoundToFinish
 	jp TextScriptEnd
+
+; Trash cans are broken and can read the 255th entry sometimes for
+; the second can.
+; rgblink was placing stuff here, so the behavior was different from
+; original Red.  This is the simplest non-code fix: allocate zeroes as
+; far as the broken code could reach.
+	ds 255

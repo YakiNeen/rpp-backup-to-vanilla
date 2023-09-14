@@ -21,6 +21,7 @@ ViridianForestTextPointers:
 	dw PickUpItemText
 	dw PickUpItemText
 	dw ViridianForestText8
+   	dw ViridianForestTree1
 	dw ViridianForestText9
 	dw ViridianForestText10
 	dw ViridianForestText11
@@ -142,3 +143,10 @@ ViridianForestText13:
 ViridianForestText14:
 	TX_FAR _ViridianForestText14
 	db "@"
+
+ViridianForestTree1:
+	TX_ASM
+	ld a, 13
+	ld [wWhichTrade], a
+	callba BerryTreeScript
+	jp TextScriptEnd

@@ -18,7 +18,7 @@ CeruleanHouse2Text1:
 .asm_74e23
 	ld hl, CeruleanHouse2Text_74e7c
 	call PrintText
-	ld hl, BadgeItemList
+	ld hl, BerryItemList
 	call LoadItemList
 	ld hl, wItemList
 	ld a, l
@@ -32,9 +32,9 @@ CeruleanHouse2Text1:
 	ld [wListMenuID], a
 	call DisplayListMenuID
 	jr c, .asm_74e60
-	ld hl, TextPointers_74e86
+	ld hl, MenuTextPointers
 	ld a, [wcf91]
-	sub $15
+	sub ORAN_BERRY
 	add a
 	ld d, $0
 	ld e, a
@@ -51,8 +51,8 @@ CeruleanHouse2Text1:
 	call PrintText
 	jp TextScriptEnd
 
-BadgeItemList:
-	db $8,BOULDERBADGE,CASCADEBADGE,THUNDERBADGE,RAINBOWBADGE,SOULBADGE,MARSHBADGE,VOLCANOBADGE,EARTHBADGE,$FF
+BerryItemList:
+	db 10,ORAN_BERRY,SITRUS_BERRY,LEPPA_BERRY,PECHA_BERRY,RAWST_BERRY,ASPEAR_BERRY,CHESTO_BERRY,CHERI_BERRY,LUM_BERRY,ACAI_BERRY,$FF
 
 CeruleanHouse2Text_74e77:
 	TX_FAR _CeruleanHouse2Text_74e77
@@ -66,44 +66,54 @@ CeruleanHouse2Text_74e81:
 	TX_FAR _CeruleanHouse2Text_74e81
 	db "@"
 
-TextPointers_74e86:
-	dw CeruleanHouse2Text_74e96
-	dw CeruleanHouse2Text_74e9b
-	dw CeruleanHouse2Text_74ea0
-	dw CeruleanHouse2Text_74ea5
-	dw CeruleanHouse2Text_74eaa
-	dw CeruleanHouse2Text_74eaf
-	dw CeruleanHouse2Text_74eb4
-	dw CeruleanHouse2Text_74eb9
+MenuTextPointers:
+	dw OranBerryText
+	dw SitrusBerryText
+	dw LeppaBerryText
+	dw PechaBerryText
+	dw RawstBerryText
+	dw AspearBerryText
+	dw ChestoBerryText
+	dw CheriBerryText
+    dw LumBerryText
+    dw SwegBerryText
 
-CeruleanHouse2Text_74e96:
-	TX_FAR _CeruleanHouse2Text_74e96
+OranBerryText:
+	TX_FAR _OranBerryText
 	db "@"
 
-CeruleanHouse2Text_74e9b:
-	TX_FAR _CeruleanHouse2Text_74e9b
+SitrusBerryText:
+	TX_FAR _SitrusBerryText
 	db "@"
 
-CeruleanHouse2Text_74ea0:
-	TX_FAR _CeruleanHouse2Text_74ea0
+LeppaBerryText:
+	TX_FAR _LeppaBerryText
 	db "@"
 
-CeruleanHouse2Text_74ea5:
-	TX_FAR _CeruleanHouse2Text_74ea5
+PechaBerryText:
+	TX_FAR _PechaBerryText
 	db "@"
 
-CeruleanHouse2Text_74eaa:
-	TX_FAR _CeruleanHouse2Text_74eaa
+RawstBerryText:
+	TX_FAR _RawstBerryText
 	db "@"
 
-CeruleanHouse2Text_74eaf:
-	TX_FAR _CeruleanHouse2Text_74eaf
+AspearBerryText:
+	TX_FAR _AspearBerryText
 	db "@"
 
-CeruleanHouse2Text_74eb4:
-	TX_FAR _CeruleanHouse2Text_74eb4
+ChestoBerryText:
+	TX_FAR _ChestoBerryText
 	db "@"
 
-CeruleanHouse2Text_74eb9:
-	TX_FAR _CeruleanHouse2Text_74eb9
+CheriBerryText:
+	TX_FAR _CheriBerryText
 	db "@"
+    
+LumBerryText:
+    TX_FAR _LumBerryText
+    db "@"
+    
+SwegBerryText:
+    TX_FAR _SwegBerryText
+    db "@"

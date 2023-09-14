@@ -1,16 +1,9 @@
 GetTrainerName_:
-	ld hl, wGrassRate
+	ld hl, wLinkEnemyTrainerName
 	ld a, [wLinkState]
 	and a
 	jr nz, .foundName
-	ld hl, wRivalName
 	ld a, [wTrainerClass]
-	cp SONY1
-	jr z, .foundName
-	cp SONY2
-	jr z, .foundName
-	cp SONY3
-	jr z, .foundName
 	ld [wd0b5], a
 	ld a, TRAINER_NAME
 	ld [wNameListType], a

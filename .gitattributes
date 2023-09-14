@@ -16,3 +16,5 @@
 *.wav binary
 *.blk binary
 *.pic binary
+*.bin binary
+*.ips binary

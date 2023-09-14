@@ -15,21 +15,7 @@ LavenderHouse2Text1:
 
 LavenderHouse2Text2:
 	TX_ASM
-	CheckEvent EVENT_RESCUED_MR_FUJI
-	jr nz, .asm_65711
-	ld hl, LavenderHouse2Text_1d9dc
-	call PrintText
-	jr .asm_64be1
-.asm_65711
-	ld hl, LavenderHouse2Text_1d9e1
-	call PrintText
-.asm_64be1
+	ld a, 8
+	ld [wWhichTrade], a
+	callba MoveTutorScript
 	jp TextScriptEnd
-
-LavenderHouse2Text_1d9dc:
-	TX_FAR _LavenderHouse2Text_1d9dc
-	db "@"
-
-LavenderHouse2Text_1d9e1:
-	TX_FAR _LavenderHouse2Text_1d9e1
-	db "@"

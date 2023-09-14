@@ -26,50 +26,68 @@ IsPlayerStandingOnDoorTile:
 	ret
 
 DoorTileIDPointers:
-	dbw OVERWORLD,   OverworldDoorTileIDs
-	dbw FOREST,      ForestDoorTileIDs
-	dbw MART,        MartDoorTileIDs
-	dbw HOUSE,       HouseDoorTileIDs
-	dbw FOREST_GATE, TilesetMuseumDoorTileIDs
-	dbw MUSEUM,      TilesetMuseumDoorTileIDs
-	dbw GATE,        TilesetMuseumDoorTileIDs
-	dbw SHIP,        ShipDoorTileIDs
-	dbw LOBBY,       LobbyDoorTileIDs
-	dbw MANSION,     MansionDoorTileIDs
-	dbw LAB,         LabDoorTileIDs
-	dbw FACILITY,    FacilityDoorTileIDs
-	dbw PLATEAU,     PlateauDoorTileIDs
-	db $ff
+	dbw OVERWORLD,    OverworldDoorTileIDs
+	dbw FOREST,       ForestDoorTileIDs
+	dbw SAFARI,       ForestDoorTileIDs
+	dbw POKECENTER,   PokecenterDoorTileIDs
+	dbw HOUSE,        HouseDoorTileIDs
+	dbw FOREST_GATE,  GateDoorTileIDs
+	dbw MUSEUM,       TilesetMuseumDoorTileIDs
+	dbw GATE,         GateDoorTileIDs
+	dbw SHIP,         ShipDoorTileIDs
+	dbw LOBBY,        LobbyDoorTileIDs
+	dbw MANSION,      MansionDoorTileIDs
+	dbw LAB,          LabDoorTileIDs
+	dbw FACILITY,     FacilityDoorTileIDs
+	dbw PLATEAU,      PlateauDoorTileIDs
+	dbw REDS_HOUSE_1, RedsHouseDoorTileIDs
+	dbw REDS_HOUSE_2, RedsHouseDoorTileIDs
+	dbw MART,         MartDoorTileIDs
+	dbw FERRY,        FerryDoorTileIDs
+	dbw MUSEUM_2,     TilesetMuseumDoorTileIDs
+	db $FF
 
 OverworldDoorTileIDs:
-	db $1B,$58,$00
+	db 27,88,$00
 
 ForestDoorTileIDs:
-	db $3a,$00
+	db 58,$00
 
-MartDoorTileIDs:
-	db $5e,$00
+PokecenterDoorTileIDs:
+	db 87,94,$00
 
 HouseDoorTileIDs:
-	db $54,$00
+	db 62,$00
 
-TilesetMuseumDoorTileIDs:
-	db $3b,$00
+GateDoorTileIDs:
+	db 22,59,$00
 
 ShipDoorTileIDs:
-	db $1e,$00
+	db 30,$00
 
 LobbyDoorTileIDs:
-	db $1c,$38,$1a,$00
+	db 26,56,$00
 
 MansionDoorTileIDs:
-	db $1a,$1c,$53,$00
+	db 26,28,83,$00
 
 LabDoorTileIDs:
-	db $34,$00
+	db 52,$00
 
 FacilityDoorTileIDs:
-	db $43,$58,$1b,$00
+	db 67,88,27,$00
 
 PlateauDoorTileIDs:
-	db $3b,$1b,$00
+	db 59,27,$00
+
+RedsHouseDoorTileIDs:
+	db 26,28,$00
+
+MartDoorTileIDs:
+	db 80,82,86,$00
+
+FerryDoorTileIDs:
+	db 16,48,$00
+
+TilesetMuseumDoorTileIDs:
+	db $16,$00

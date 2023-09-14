@@ -17,7 +17,7 @@ SetDefaultNamesBeforeTitlescreen:
 	ld [hli], a
 	ld [hli], a
 	ld [hl], a
-	ld a, BANK(Music_TitleScreen)
+	ld a, 0 ; BANK(Music_TitleScreen)
 	ld [wAudioROMBank], a
 	ld [wAudioSavedROMBank], a
 
@@ -56,7 +56,7 @@ DisplayTitleScreen:
 	ld a, BANK(PokemonLogoGraphics)
 	call FarCopyData2          ; second chunk
 	ld hl, Version_GFX
-	ld de, vChars2 + $600 - (Version_GFXEnd - Version_GFX - $50)
+	ld de,vChars2 + $600 - (Version_GFXEnd - Version_GFX - $50)
 	ld bc, Version_GFXEnd - Version_GFX
 	ld a, BANK(Version_GFX)
 	call FarCopyDataDouble
@@ -117,13 +117,7 @@ DisplayTitleScreen:
 	call SaveScreenTilesToBuffer2
 	call LoadScreenTilesFromBuffer2
 	call EnableLCD
-IF DEF(_RED)
-	ld a, CHARMANDER ; which Pokemon to show first on the title screen
-ENDC
-IF DEF(_BLUE)
-	ld a, SQUIRTLE ; which Pokemon to show first on the title screen
-ENDC
-
+	ld a,CHARIZARD ; which Pokemon to show first on the title screen
 	ld [wTitleMonSpecies], a
 	call LoadTitleMonSprite
 	ld a, (vBGMap0 + $300) / $100
@@ -181,6 +175,9 @@ ENDC
 	ret
 
 .finishedBouncingPokemonLogo
+	xor a
+	ld [hSCY], a
+
 	call LoadScreenTilesFromBuffer1
 	ld c, 36
 	call DelayFrames
@@ -213,7 +210,7 @@ ENDC
 	call WaitForSoundToFinish
 	ld a, MUSIC_TITLE_SCREEN
 	ld [wNewSoundID], a
-	call PlaySound
+	call PlayMusic
 	xor a
 	ld [wUnusedCC5B], a
 
@@ -264,13 +261,11 @@ TitleScreenPickNewMon:
 .loop
 ; Keep looping until a mon different from the current one is picked.
 	call Random
-	and $f
-	ld c, a
-	ld b, 0
-	ld hl, TitleMons
-	add hl, bc
-	ld a, [hl]
-	ld hl, wTitleMonSpecies
+	and a
+	jp z, .loop        ; Make sure it isn't 0
+	cp NUM_POKEMON + 1 ; Make sure it's a valid mon
+	jr nc, .loop       ; If it isn't, try again
+	ld hl, wWhichTrade ; wWhichTrade
 
 ; Can't be the same as before.
 	cp [hl]
@@ -282,7 +277,8 @@ TitleScreenPickNewMon:
 	ld a, $90
 	ld [hWY], a
 	ld d, 1 ; scroll out
-	callba TitleScroll
+	; HAX; palette must be refreshed
+	callba LoadTitleMonTilesAndPalettes
 	ret
 
 TitleScreenScrollInMon:
@@ -382,8 +378,6 @@ CopyrightTextString:
 	next $60,$61,$62,$61,$63,$61,$64,$7F,$73,$74,$75,$76,$77,$78,$79,$7A,$7B ; ©'95.'96.'98 GAME FREAK inc.
 	db   "@"
 
-INCLUDE "data/title_mons.asm"
-
 ; prints version text (red, blue)
 PrintGameVersionOnTitleScreen:
 	coord hl, 7, 8
@@ -392,12 +386,7 @@ PrintGameVersionOnTitleScreen:
 
 ; these point to special tiles specifically loaded for that purpose and are not usual text
 VersionOnTitleScreenText:
-IF DEF(_RED)
-	db $60,$61,$7F,$65,$66,$67,$68,$69,"@" ; "Red Version"
-ENDC
-IF DEF(_BLUE)
-	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Blue Version"
-ENDC
+	db $60,$61,$62,$7F,$65,$66,$67,$68,$69,"@" ; "Red Version"
 
-NintenText: db "NINTEN@"
-SonyText:   db "SONY@"
+NintenText: db "Ninten@"
+SonyText:   db "Sony@"

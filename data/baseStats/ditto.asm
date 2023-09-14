@@ -11,11 +11,11 @@ db 61 ; base exp yield
 INCBIN "pic/bmon/ditto.pic",0,1 ; 55, sprite dimensions
 dw DittoPicFront
 dw DittoPicBack
-; attacks known at lvl 0
-db TRANSFORM
-db 0
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
 	tmlearn 0
@@ -25,4 +25,4 @@ db 0 ; growth rate
 	tmlearn 0
 	tmlearn 0
 	tmlearn 0
-db 0 ; padding
+db BANK(DittoPicFront)

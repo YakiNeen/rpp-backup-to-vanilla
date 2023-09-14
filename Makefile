@@ -1,3 +1,9 @@
+ifneq ($(wildcard rgbds/.*),)
+RGBDS_DIR = rgbds/
+else
+RGBDS_DIR =
+endif
+
 MD5 := md5sum -c
 
 pokered_obj := audio_red.o main_red.o text_red.o wram_red.o
@@ -5,8 +11,8 @@ pokeblue_obj := audio_blue.o main_blue.o text_blue.o wram_blue.o
 
 .SUFFIXES:
 .SECONDEXPANSION:
-.PRECIOUS:
-.SECONDARY:
+# Suppress annoying intermediate file deletion messages.
+.PRECIOUS: %.2bpp
 .PHONY: all clean red blue compare tools
 
 roms := pokered.gbc pokeblue.gbc
@@ -35,33 +41,34 @@ $(info $(shell $(MAKE) -C tools))
 endif
 
 
+
 %.asm: ;
 
 %_red.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokered_obj): %_red.o: %.asm $$(dep)
-	rgbasm -D _RED -h -o $@ $*.asm
+	$(RGBDS_DIR)rgbasm -D _RED -h -o $@ $*.asm
 
 %_blue.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 $(pokeblue_obj): %_blue.o: %.asm $$(dep)
-	rgbasm -D _BLUE -h -o $@ $*.asm
+	$(RGBDS_DIR)rgbasm -D _BLUE -h -o $@ $*.asm
 
-pokered_opt  = -jsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
-pokeblue_opt = -jsv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON BLUE"
+pokered_opt  = -Cjv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
+pokeblue_opt = -Cjv -k 01 -l 0x33 -m 0x13 -p 0 -r 03 -t "POKEMON RED"
 
 %.gbc: $$(%_obj)
-	rgblink -d -n $*.sym -l pokered.link -o $@ $^
-	rgbfix $($*_opt) $@
+	$(RGBDS_DIR)rgblink -n $*.sym -o $@ $^
+	$(RGBDS_DIR)rgbfix $($*_opt) $@
 	sort $*.sym -o $*.sym
 
-gfx/blue/intro_purin_1.2bpp: rgbgfx += -h
-gfx/blue/intro_purin_2.2bpp: rgbgfx += -h
-gfx/blue/intro_purin_3.2bpp: rgbgfx += -h
-gfx/red/intro_nido_1.2bpp: rgbgfx += -h
-gfx/red/intro_nido_2.2bpp: rgbgfx += -h
-gfx/red/intro_nido_3.2bpp: rgbgfx += -h
+gfx/blue/intro_purin_1.6x6.2bpp: rgbgfx += -h
+gfx/blue/intro_purin_2.6x6.2bpp: rgbgfx += -h
+gfx/blue/intro_purin_3.6x6.2bpp: rgbgfx += -h
+gfx/red/intro_nido_1.6x6.2bpp: rgbgfx += -h
+gfx/red/intro_nido_2.6x6.2bpp: rgbgfx += -h
+gfx/red/intro_nido_3.6x6.2bpp: rgbgfx += -h
 
-gfx/game_boy.2bpp: tools/gfx += --remove-duplicates
-gfx/theend.2bpp: tools/gfx += --interleave --png=$<
+gfx/game_boy.norepeat.2bpp: tools/gfx += --remove-duplicates
+gfx/theend.interleave.2bpp: tools/gfx += --interleave --png=$<
 gfx/tilesets/%.2bpp: tools/gfx += --trim-whitespace
 
 %.png: ;

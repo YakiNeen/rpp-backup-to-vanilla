@@ -1,3 +1,10 @@
+IF DEF(_BLUE)
+_HARD EQU 1
+ENDC
+
+; uncomment this to build snowy roms
+;_SNOW EQU 1
+
 INCLUDE "macros.asm"
 INCLUDE "charmap.asm"
 
@@ -11,6 +18,7 @@ INCLUDE "constants/misc_constants.asm"
 INCLUDE "constants/pokemon_constants.asm"
 INCLUDE "constants/pokedex_constants.asm"
 INCLUDE "constants/trainer_constants.asm"
+INCLUDE "constants/special_ai_constants.asm"
 INCLUDE "constants/item_constants.asm"
 INCLUDE "constants/type_constants.asm"
 INCLUDE "constants/move_constants.asm"
@@ -30,3 +38,5 @@ INCLUDE "constants/tilesets.asm"
 INCLUDE "constants/starter_mons.asm"
 INCLUDE "constants/event_constants.asm"
 INCLUDE "constants/text_constants.asm"
+INCLUDE "color/wram.asm"
+INCLUDE "color/data/map_palette_constants.asm"

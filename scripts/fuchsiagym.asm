@@ -19,9 +19,9 @@ FuchsiaGymScript_75453:
 	ret
 
 Gym5CityName:
-	db "FUCHSIA CITY@"
+	db "Fuchsia City@"
 Gym5LeaderName:
-	db "KOGA@"
+	db "Koga@"
 
 FuchsiaGymScript_75477:
 	xor a
@@ -60,9 +60,7 @@ FuchsiaGymScript3_75497:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_754c0
-	ld hl, wObtainedBadges
-	set 4, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 4, [hl]
 
 	; deactivate gym trainers

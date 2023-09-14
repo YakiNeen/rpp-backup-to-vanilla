@@ -375,10 +375,11 @@ IsPlayerStandingOnWarpPadOrHole:
 
 ; format: db tileset id, tile id, value to be put in [wStandingOnWarpPadOrHole]
 .warpPadAndHoleData:
-	db FACILITY, $20, 1 ; warp pad
-	db FACILITY, $11, 2 ; hole
-	db CAVERN,   $22, 2 ; hole
-	db INTERIOR, $55, 1 ; warp pad
+	db FACILITY,   $20, 1 ; warp pad
+	db FACILITY,   $11, 2 ; hole
+	db CAVERN,     $22, 2 ; hole
+	db INTERIOR,   $55, 1 ; warp pad
+	db ICE_CAVERN, $22, 2 ; hole
 	db $FF
 
 FishingAnim:
@@ -386,12 +387,29 @@ FishingAnim:
 	call DelayFrames
 	ld hl, wd736
 	set 6, [hl] ; reserve the last 4 OAM entries
+	ld a, [wPlayerGender] ; added gender check
+	and a      ; added gender check
+	jr z, .BoySpriteLoad
+	ld de, LeafSprite
+	ld hl, vNPCSprites
+	ld bc, (BANK(LeafSprite) << 8) + $0c
+	jr .KeepLoadingSpriteStuff
+.BoySpriteLoad
 	ld de, RedSprite
 	ld hl, vNPCSprites
 	lb bc, BANK(RedSprite), $c
+.KeepLoadingSpriteStuff
 	call CopyVideoData
+	ld a, [wPlayerGender] ; added gender check
+	and a      ; added gender check
+	jr z, .BoyTiles ; skip loading Leaf's stuff if you're Red
+	ld a, $4
+	ld hl, LeafFishingTiles
+	jr .ContinueRoutine ; go back to main routine after loading Leaf's stuff
+.BoyTiles ; alternately, load Red's stuff
 	ld a, $4
 	ld hl, RedFishingTiles
+.ContinueRoutine
 	call LoadAnimSpriteGfx
 	ld a, [wSpriteStateData1 + 2]
 	ld c, a
@@ -496,6 +514,23 @@ RedFishingTiles:
 
 	dw RedFishingTilesSide
 	db 2, BANK(RedFishingTilesSide)
+	dw vNPCSprites + $a0
+
+	dw RedFishingRodTiles
+	db 3, BANK(RedFishingRodTiles)
+	dw vNPCSprites2 + $7d0
+	
+LeafFishingTiles: ; newly added table of Leaf's sprites
+	dw LeafFishingTilesFront
+	db 2, BANK(LeafFishingTilesFront)
+	dw vNPCSprites + $20
+
+	dw LeafFishingTilesBack
+	db 2, BANK(LeafFishingTilesBack)
+	dw vNPCSprites + $60
+
+	dw LeafFishingTilesSide
+	db 2, BANK(LeafFishingTilesSide)
 	dw vNPCSprites + $a0
 
 	dw RedFishingRodTiles

@@ -12,7 +12,7 @@ SubstituteEffect_:
 	ld bc, wEnemyBattleStatus2
 .notEnemy
 	ld a, [bc]
-	bit HAS_SUBSTITUTE_UP, a ; user already has substitute?
+	bit HasSubstituteUp, a ; user already has substitute?
 	jr nz, .alreadyHasSubstitute
 ; quarter health to remove from user
 ; assumes max HP is 1023 or lower
@@ -39,11 +39,15 @@ SubstituteEffect_:
 	jr c, .notEnoughHP ; underflow means user would be left with negative health
                            ; bug: since it only branches on carry, it will possibly leave user with 0 HP
 .userHasZeroOrMoreHP
+	ld e, a
+	or d
+	ld a, e
+	jr z, .notEnoughHP ; fail if move would leave user with 0 hp
 	ldi [hl], a ; save resulting HP after subtraction into current HP
 	ld [hl], d
 	ld h, b
 	ld l, c
-	set HAS_SUBSTITUTE_UP, [hl]
+	set HasSubstituteUp, [hl]
 	ld a, [wOptions]
 	bit 7, a ; battle animation is enabled?
 	ld hl, PlayCurrentMoveAnimation

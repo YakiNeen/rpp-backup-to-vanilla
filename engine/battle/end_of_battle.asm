@@ -45,7 +45,7 @@ EndOfBattle:
 	predef EvolutionAfterBattle
 .resetVariables
 	xor a
-	ld [wLowHealthAlarm], a ;disable low health alarm
+	ld [wDanger], a ;disable low health alarm
 	ld [wChannelSoundIDs + Ch4], a
 	ld [wIsInBattle], a
 	ld [wBattleType], a
@@ -75,13 +75,13 @@ EndOfBattle:
 	ret
 
 YouWinText:
-	db "YOU WIN@"
+	db "You Win@"
 
 YouLoseText:
-	db "YOU LOSE@"
+	db "You Lose@"
 
 DrawText:
-	db "  DRAW@"
+	db "  Draw@"
 
 PickUpPayDayMoneyText:
 	TX_FAR _PickUpPayDayMoneyText

@@ -19,8 +19,9 @@ SaffronHouse1Text2:
 	jp TextScriptEnd
 
 SaffronHouse1Text3:
-	TX_FAR _SaffronHouse1Text3
-	db "@"
+	TX_ASM
+	callba MoveTutorScriptSpecial
+	jp TextScriptEnd
 
 SaffronHouse1Text4:
 	TX_FAR _SaffronHouse1Text4

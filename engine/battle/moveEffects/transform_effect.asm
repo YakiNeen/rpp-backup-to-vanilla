@@ -12,7 +12,7 @@ TransformEffect_:
 	ld [wPlayerMoveListIndex], a
 	ld a, [wPlayerBattleStatus1]
 .hitTest
-	bit INVULNERABLE, a ; is mon invulnerable to typical attacks? (fly/dig)
+	bit Invulnerable, a ; is mon invulnerable to typical attacks? (fly/dig)
 	jp nz, .failed
 	push hl
 	push de
@@ -24,7 +24,7 @@ TransformEffect_:
 	ld hl, wEnemyBattleStatus2
 .transformEffect
 ; animation(s) played are different if target has Substitute up
-	bit HAS_SUBSTITUTE_UP, [hl]
+	bit HasSubstituteUp, [hl]
 	push af
 	ld hl, HideSubstituteShowMonAnim
 	ld b, BANK(HideSubstituteShowMonAnim)
@@ -44,7 +44,7 @@ TransformEffect_:
 	call nz, Bankswitch
 	pop bc
 	ld a, [bc]
-	set TRANSFORMED, a ; mon is now transformed
+	set Transformed, a ; mon is now Transformed
 	ld [bc], a
 	pop de
 	pop hl

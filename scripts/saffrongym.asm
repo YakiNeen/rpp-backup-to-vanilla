@@ -17,10 +17,10 @@ SaffronGymScript:
 	jp LoadGymLeaderAndCityName
 
 Gym6CityName:
-	db "SAFFRON CITY@"
+	db "Saffron City@"
 
 Gym6LeaderName:
-	db "SABRINA@"
+	db "Sabrina@"
 
 SaffronGymText_5d048:
 	xor a
@@ -60,9 +60,7 @@ SaffronGymText_5d068:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_5d091
-	ld hl, wObtainedBadges
-	set 5, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 5, [hl]
 
 	; deactivate gym trainers

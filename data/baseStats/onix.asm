@@ -11,18 +11,18 @@ db 108 ; base exp yield
 INCBIN "pic/bmon/onix.pic",0,1 ; 77, sprite dimensions
 dw OnixPicFront
 dw OnixPicBack
-; attacks known at lvl 0
-db TACKLE
-db SCREECH
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
-	tmlearn 6,8
-	tmlearn 9,10
-	tmlearn 20
+	tmlearn 3,6,7,8
+	tmlearn 9,10,15,16
+	tmlearn 18,23
 	tmlearn 26,27,28,31,32
-	tmlearn 34,36,40
+	tmlearn 34,35,36,40
 	tmlearn 44,47,48
-	tmlearn 50,54
-db 0 ; padding
+	tmlearn 54
+db BANK(OnixPicFront)

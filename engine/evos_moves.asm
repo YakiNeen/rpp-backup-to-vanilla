@@ -75,13 +75,22 @@ Evolution_PartyMonLoop: ; loop over party mons
 	jr z, Evolution_PartyMonLoop ; if trading, go the next mon
 	ld a, b
 	cp EV_ITEM
-	jr z, .checkItemEvo
+	jp z, .checkItemEvo
 	ld a, [wForceEvolution]
 	and a
 	jr nz, Evolution_PartyMonLoop
 	ld a, b
 	cp EV_LEVEL
-	jr z, .checkLevel
+	jp z, .checkLevel
+	cp EV_MAP
+	jp z, .checkMapEvo
+	cp EV_MOVE
+	jp z, .checkMoveEvo
+	cp EV_RAND
+	jp z, .checkRandomEvo
+    cp EV_TYROGUE
+    jp z, .checkTyrogueEvo
+	
 .checkTradeEvo
 	ld a, [wLinkState]
 	cp LINK_STATE_TRADING
@@ -91,19 +100,107 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld a, [wLoadedMonLevel]
 	cp b ; is the mon's level greater than the evolution requirement?
 	jp c, Evolution_PartyMonLoop ; if so, go the next mon
-	jr .doEvolution
+	jp .doEvolution
+	
+.checkMapEvo
+	ld a, [hli]
+	ld b, a ; Map to evolve on
+	ld a, [wCurMap]
+	cp b ; Are we on the right map?
+	jp nz, .nextEvoEntry2
+	ld a, [wLoadedMonLevel] ; This has to be in "a" for the evolution to work properly
+	jp .doEvolution; Do evolution
+	
+.checkMoveEvo
+	ld a, [hli] ; get the move number
+	ld [wMoveNum],a ; store it here to hang onto it
+	push hl ; We don't want to lose our place
+	call CheckForMove ; New routine based on the one used by TMs
+	pop hl ; Get our place back
+	jp nc, .nextEvoEntry2 ; If they didn't know the move, go to next evolution
+	ld a, [wLoadedMonLevel] ; This has to be in "a" for the evolution to work properly
+	jp .doEvolution; If they did know it, do the evolution
+	
+.checkRandomEvo
+	ld a, [hli] ; get level to evolve
+	ld b, a
+	ld a, [wLoadedMonLevel]
+	cp b
+	jp c, .nextEvoEntry1 ; if too low, go to next evolution
+	ld a, [hli] ; which method is this?
+	dec a ; is it RAND_1?
+	jr z, .rand1
+;rand2
+	push hl
+	call GetMonDVs
+	pop hl
+	jp c, .nextEvoEntry2
+	jp z, .nextEvoEntry2
+	jr .randDone	
+.rand1
+	push hl
+	call GetMonDVs
+	pop hl
+	jp nc, .nextEvoEntry2
+.randDone
+	ld a, [wLoadedMonLevel] ; This has to be in "a" for the evolution to work properly
+	jr .doEvolution ; Do evolution
+	
+.checkTyrogueEvo
+    ld a, [hli] ; level to evolve
+    ld b, a
+    ld a, [wLoadedMonLevel] ; current level
+    cp b
+    jp c, .nextEvoEntry1 ; if too low, go to next evo
+    ld a, [hli] ; which method is this?
+    cp ATK_HIGHER
+    jp z, .AtkHigher
+    cp BOTH_EQUAL
+    jp z, .AtkDefEqual
+    cp DEF_HIGHER
+    jp z, .DefHigher
+.AtkHigher
+    push hl ; Don't lose your place in the evolution data
+    call GetTyrogueAtkDef
+    pop hl ; Get our place back
+    jp c, .nextEvoEntry2
+    jp z, .nextEvoEntry2
+    jr .TyrogueDone
+.AtkDefEqual
+    push hl ; Don't lose your place in the evolution data
+    call GetTyrogueAtkDef
+    pop hl ; Get our place back
+    jp nz, .nextEvoEntry2
+    jr .TyrogueDone
+.DefHigher
+    push hl ; Don't lose your place in the evolution data
+    call GetTyrogueAtkDef
+    pop hl ; Get our place back
+    jp z, .nextEvoEntry2
+    jp nc, .nextEvoEntry2
+.TyrogueDone
+    ld a, [wLoadedMonLevel]
+    jr .doEvolution ; Do first Pokemon if Def is higher
+	
 .checkItemEvo
 	ld a, [hli]
 	ld b, a ; evolution item
+    ld a,[wIsInBattle] ; check if we're in a battle
+	and a
+	jp nz, .nextEvoEntry1 ; If we are, skip ahead
 	ld a, [wcf91] ; this is supposed to be the last item used, but it is also used to hold species numbers
 	cp b ; was the evolution item in this entry used?
 	jp nz, .nextEvoEntry1 ; if not, go to the next evolution entry
+	; fallthrough
+	
 .checkLevel
 	ld a, [hli] ; level requirement
 	ld b, a
 	ld a, [wLoadedMonLevel]
 	cp b ; is the mon's level greater than the evolution requirement?
 	jp c, .nextEvoEntry2 ; if so, go the next evolution entry
+	; fallthrough
+	
 .doEvolution
 	ld [wCurEnemyLVL], a
 	ld a, 1
@@ -164,7 +261,11 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld bc, MonBaseStatsEnd - MonBaseStats
 	call AddNTimes
 	ld de, wMonHeader
-	call CopyData
+	;call CopyData
+; New thing to move BaseStats into another bank
+	ld a, BANK(BaseStats)
+	call FarCopyData
+;End new thing
 	ld a, [wd0b5]
 	ld [wMonHIndex], a
 	pop af
@@ -232,7 +333,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld l, e
 	ld h, d
 	jr .nextEvoEntry2
-
+   
 .nextEvoEntry1
 	inc hl
 
@@ -318,58 +419,59 @@ Evolution_ReloadTilesetTilePatterns:
 	jp ReloadTilesetTilePatterns
 
 LearnMoveFromLevelUp:
-	ld hl, EvosMovesPointerTable
 	ld a, [wd11e] ; species
 	ld [wcf91], a
 	dec a
-	ld bc, 0
-	ld hl, EvosMovesPointerTable
-	add a
-	rl b
+	ld b, 0
 	ld c, a
+	ld hl, EvosMovesPointerTable
+	add hl, bc
 	add hl, bc
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+	
 .skipEvolutionDataLoop ; loop to skip past the evolution data, which comes before the move data
 	ld a, [hli]
 	and a ; have we reached the end of the evolution data?
 	jr nz, .skipEvolutionDataLoop ; if not, jump back up
+	
 .learnSetLoop ; loop over the learn set until we reach a move that is learnt at the current level or the end of the list
 	ld a, [hli]
 	and a ; have we reached the end of the learn set?
 	jr z, .done ; if we've reached the end of the learn set, jump
+	
 	ld b, a ; level the move is learnt at
 	ld a, [wCurEnemyLVL]
 	cp b ; is the move learnt at the mon's current level?
 	ld a, [hli] ; move ID
 	jr nz, .learnSetLoop
+	
+	push hl
 	ld d, a ; ID of move to learn
-	ld a, [wMonDataLocation]
-	and a
-	jr nz, .next
-; If [wMonDataLocation] is 0 (PLAYER_PARTY_DATA), get the address of the mon's
-; current moves in party data. Every call to this function sets
-; [wMonDataLocation] to 0 because other data locations are not supported.
-; If it is not 0, this function will not work properly.
 	ld hl, wPartyMon1Moves
 	ld a, [wWhichPokemon]
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes
-.next
+
 	ld b, NUM_MOVES
 .checkCurrentMovesLoop ; check if the move to learn is already known
 	ld a, [hli]
 	cp d
-	jr z, .done ; if already known, jump
+	jr z, .has_move ; if already known, jump
 	dec b
 	jr nz, .checkCurrentMovesLoop
+;learn move
 	ld a, d
 	ld [wMoveNum], a
 	ld [wd11e], a
 	call GetMoveName
 	call CopyStringToCF4B
 	predef LearnMove
+.has_move
+	pop hl
+	jr .learnSetLoop
+	
 .done
 	ld a, [wcf91]
 	ld [wd11e], a
@@ -509,5 +611,158 @@ WriteMonMoves_ShiftMoveData:
 
 Evolution_FlagAction:
 	predef_jump FlagActionPredef
+	
+CheckForMove: ; New routine used by EV_MOVE
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Moves
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	ld a, [wMoveNum]
+	ld b, a
+	ld c, NUM_MOVES
+.loop
+	ld a, [hli]
+	cp b
+	jr z, .known
+	dec c
+	jr nz, .loop
+	and a
+	ret
+.known
+	scf
+	ret
+
+GetTyrogueAtkDef:
+; new routine for Tyrogue evolution
+; stores his Atk location in de
+; stores his Def location in hl
+    ld a, [wWhichPokemon]
+    ld hl, wPartyMon1Attack
+    ld bc, wPartyMon2 - wPartyMon1
+    call AddNTimes
+    ld d,h
+    ld e,l
+; de now points to his Atk
+    inc hl
+    inc hl
+; hl now points to his Def
+    ld c, $2 ; data length
+    call StringCmp ; compare his attack and defense
+    ret
+	
+GetMonDVs:
+; new routine for EV_RAND which isn't really random
+; this reads the DVs of the partymon and compares the two bytes
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1DVs
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	ld a, [hli]
+	ld b, a
+	ld a, [hl]
+	cp b
+	ret
+
+PrepareRelearnableMoveList:
+; Loads relearnable move list to wRelearnableMoves.
+; Input: party mon index = [wWhichPokemon]
+	; Get mon id.
+	ld a, [wWhichPokemon]
+	ld c, a
+	ld b, 0
+	ld hl, wPartySpecies
+	add hl, bc
+	ld a, [hl] ; a = mon id
+	; Get pointer to evos moves data.
+	dec a
+	ld c, a
+	ld b, 0
+	ld hl, EvosMovesPointerTable
+	add hl, bc
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a  ; hl = pointer to evos moves data for our mon
+	push hl
+	; Get pointer to mon's currently-known moves.
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Level
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	ld a, [hl]
+	ld b, a
+	push bc
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Moves
+	ld bc, wPartyMon2 - wPartyMon1
+	call AddNTimes
+	pop bc
+	ld d, h
+	ld e, l
+	pop hl
+	; Skip over evolution data.
+.skipEvoEntriesLoop
+	ld a, [hli]
+	and a
+	jr nz, .skipEvoEntriesLoop
+	; Write list of relearnable moves, while keeping count along the way.
+	; de = pointer to mon's currently-known moves
+	; hl = pointer to moves data for our mon
+	;  b = mon's level
+	ld c, 0 ; c = count of relearnable moves
+.loop
+	ld a, [hli]
+	and a
+	jr z, .done
+	cp b
+	jr c, .addMove
+	jr nz, .done
+.addMove
+	push bc
+	ld a, [hli] ; move id
+	ld b, a
+	; Check if move is already known by our mon.
+	push de
+	ld a, [de]
+	cp b
+	jr z, .knowsMove
+	inc de
+	ld a, [de]
+	cp b
+	jr z, .knowsMove
+	inc de
+	ld a, [de]
+	cp b
+	jr z, .knowsMove
+	inc de
+	ld a, [de]
+	cp b
+	jr z, .knowsMove
+.relearnableMove
+	pop de
+	push hl
+	; Add move to the list, and update the running count.
+	ld a, b
+	ld b, 0
+	ld hl, wRelearnableMoves + 1
+	add hl, bc
+	ld [hl], a
+	pop hl
+	pop bc
+	inc c
+	jr .loop
+.knowsMove
+	pop de
+	pop bc
+	jr .loop
+.done
+	ld b, 0
+	ld hl, wRelearnableMoves + 1
+	add hl, bc
+	ld a, $ff
+	ld [hl], a
+	ld hl, wRelearnableMoves
+	ld [hl], c
+	ret
 
 INCLUDE "data/evos_moves.asm"

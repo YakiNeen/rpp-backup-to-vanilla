@@ -11,18 +11,18 @@ db 119 ; base exp yield
 INCBIN "pic/bmon/kabuto.pic",0,1 ; 55, sprite dimensions
 dw KabutoPicFront
 dw KabutoPicBack
-; attacks known at lvl 0
-db SCRATCH
-db HARDEN
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
-	tmlearn 6,8
+	tmlearn 3,6,8
 	tmlearn 9,10,11,12,13,14
-	tmlearn 20
-	tmlearn 31,32
-	tmlearn 33,34
-	tmlearn 44
-	tmlearn 50,53
-db 0 ; padding
+	tmlearn 20,21
+	tmlearn 26,27,28,31,32
+	tmlearn 33,34,35,36
+	tmlearn 44,48
+	tmlearn 53,55
+db BANK(KabutoPicFront)

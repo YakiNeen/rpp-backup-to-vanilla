@@ -9,9 +9,10 @@ MtMoonPokecenterTextPointers:
 	dw MagikarpSalesmanText
 	dw MtMoonPokecenterText5
 	dw MtMoonTradeNurseText
+	dw MtMoonPokecenterBenchGuyText
 
 MtMoonHealNurseText:
-	db $ff
+	TX_POKECENTER_NURSE
 
 MtMoonPokecenterText2:
 	TX_FAR _MtMoonPokecenterText1
@@ -43,6 +44,9 @@ MagikarpSalesmanText:
 	ld hl, .NoMoneyText
 	jr .printText
 .enoughMoney
+	; this Magikarp is shiny
+	ld hl, wExtraFlags
+	set 0, [hl]
 	lb bc, MAGIKARP, 5
 	call GivePokemon
 	jr nc, .done
@@ -68,6 +72,9 @@ MagikarpSalesmanText:
 .printText
 	call PrintText
 .done
+	; reset the shiny flag just in case buying it failed, so the next wildmon isn't accidentally shiny
+	ld hl, wExtraFlags
+	res 0, [hl]
 	jp TextScriptEnd
 
 .Text1
@@ -91,4 +98,8 @@ MtMoonPokecenterText5:
 	db "@"
 
 MtMoonTradeNurseText:
-	db $f6
+	TX_CABLE_CLUB_RECEPTIONIST
+
+MtMoonPokecenterBenchGuyText:
+	TX_FAR _MtMoonPokecenterBenchGuyText
+	db "@"

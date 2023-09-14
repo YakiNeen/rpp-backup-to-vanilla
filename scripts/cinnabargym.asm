@@ -23,9 +23,9 @@ CinnabarGymScript_75772:
 	jp LoadGymLeaderAndCityName
 
 Gym7CityName:
-	db "CINNABAR ISLAND@"
+	db "Cinnabar Island@"
 Gym7LeaderName:
-	db "BLAINE@"
+	db "Blaine@"
 
 CinnabarGymScript_75792:
 	xor a
@@ -157,9 +157,7 @@ CinnabarGymScript3_75857:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_75880
-	ld hl, wObtainedBadges
-	set 6, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 6, [hl]
 
 	; deactivate gym trainers

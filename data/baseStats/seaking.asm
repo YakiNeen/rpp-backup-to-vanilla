@@ -11,18 +11,18 @@ db 170 ; base exp yield
 INCBIN "pic/bmon/seaking.pic",0,1 ; 77, sprite dimensions
 dw SeakingPicFront
 dw SeakingPicBack
-; attacks known at lvl 0
-db PECK
-db TAIL_WHIP
-db SUPERSONIC
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
-	tmlearn 6,7
+	tmlearn 6,7,8
 	tmlearn 9,10,11,12,13,14,15
-	tmlearn 20
+	tmlearn 0
 	tmlearn 31,32
 	tmlearn 34,39,40
 	tmlearn 44
-	tmlearn 50,53
-db 0 ; padding
+	tmlearn 53,55
+db BANK(SeakingPicFront)

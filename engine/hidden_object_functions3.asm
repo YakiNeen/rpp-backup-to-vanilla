@@ -1,12 +1,26 @@
 ; prints text for bookshelves in buildings without sign events
 PrintBookshelfText:
-	ld a, [wSpriteStateData1 + 9] ; player's sprite facing direction
-	cp SPRITE_FACING_UP
-	jr nz, .noMatch
-; facing up
 	ld a, [wCurMapTileset]
 	ld b, a
+	ld a, [wSpriteStateData1 + 9] ; player's sprite facing direction	
+	cp SPRITE_FACING_UP
+	jr z, .up
+	cp SPRITE_FACING_LEFT
+	jr z, .left
+	cp SPRITE_FACING_RIGHT
+	jr z, .right
+	; SPRITE_FACING_DOWN
+	aCoord 8, 11
+	jr .got_coord
+.up
 	aCoord 8, 7
+	jr .got_coord
+.left
+	aCoord 6, 9
+	jr .got_coord
+.right
+	aCoord 10, 9
+.got_coord
 	ld c, a
 	ld hl, BookshelfTileIDs
 .loop
@@ -38,40 +52,58 @@ PrintBookshelfText:
 
 ; format: db tileset id, bookshelf tile id, text id
 BookshelfTileIDs:
-	db PLATEAU,      $30
+	db LAB,		  40
+	db_tx_pre BookOrSculptureText
+	db MART,		 26
+	db_tx_pre PokemonStuffText
+	db MART,		 28
+	db_tx_pre PokemonStuffText
+	db MART,		 54
+	db_tx_pre PokemonStuffText
+	db MART,		 58
+	db_tx_pre PokemonStuffText
+	db MART,		 60
+	db_tx_pre PokemonStuffText
+	db MART,		 90
+	db_tx_pre PokemonStuffText
+	db MART,		 92
+	db_tx_pre PokemonStuffText
+	db OAK_TS,	   92
+	db_tx_pre BookOrSculptureText
+	db OAK_TS,	   94
+	db_tx_pre BookOrSculptureText
+	db MANSION,	  50
+	db_tx_pre BookOrSculptureText
+	db GATE,		 34
+	db_tx_pre BookOrSculptureText
+	db GATE,		 56
+	db_tx_pre MyReflectionText
+	db GATE,		 78
+	db_tx_pre MyReflectionText
+	db GATE,		 93
+	db_tx_pre MyReflectionText
+	db SHIP,		 54
+	db_tx_pre BookOrSculptureText
+	db REDS_HOUSE_1, 50
+	db_tx_pre BookOrSculptureText
+	db REDS_HOUSE_1, 61
+	db_tx_pre MyReflectionText
+	db PLATEAU,	  48
 	db_tx_pre IndigoPlateauStatues
-	db HOUSE,        $3D
+	db HOUSE,		33
+	db_tx_pre MyReflectionText
+	db HOUSE,		60
 	db_tx_pre TownMapText
-	db HOUSE,        $1E
+	db HOUSE,		50
 	db_tx_pre BookOrSculptureText
-	db MANSION,      $32
+	db GYM,		  29
 	db_tx_pre BookOrSculptureText
-	db REDS_HOUSE_1, $32
-	db_tx_pre BookOrSculptureText
-	db LAB,          $28
-	db_tx_pre BookOrSculptureText
-	db LOBBY,        $16
+	db POKECENTER,   41
+	db_tx_pre WonderTradeMachineText
+	db LOBBY,		22
 	db_tx_pre ElevatorText
-	db GYM,          $1D
-	db_tx_pre BookOrSculptureText
-	db DOJO,         $1D
-	db_tx_pre BookOrSculptureText
-	db GATE,         $22
-	db_tx_pre BookOrSculptureText
-	db MART,         $54
-	db_tx_pre PokemonStuffText
-	db MART,         $55
-	db_tx_pre PokemonStuffText
-	db POKECENTER,   $54
-	db_tx_pre PokemonStuffText
-	db POKECENTER,   $55
-	db_tx_pre PokemonStuffText
-	db LOBBY,        $50
-	db_tx_pre PokemonStuffText
-	db LOBBY,        $52
-	db_tx_pre PokemonStuffText
-	db SHIP,         $36
-	db_tx_pre BookOrSculptureText
+	db FERRY,		 4
+	db_tx_pre MyReflectionText
 	db $FF
 
 IndigoPlateauStatues:
@@ -150,4 +182,13 @@ TownMapText:
 
 PokemonStuffText:
 	TX_FAR _PokemonStuffText
+	db "@"
+
+WonderTradeMachineText:
+	TX_ASM
+	callba DoWonderTradeDialogue
+	jp TextScriptEnd
+
+MyReflectionText:
+	TX_FAR _MyReflectionText
 	db "@"

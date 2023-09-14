@@ -1,6 +1,6 @@
 ViridianForestEntrance_h:
-	db FOREST_GATE ; tileset
-	db VIRIDIAN_FOREST_ENTRANCE_HEIGHT, VIRIDIAN_FOREST_ENTRANCE_WIDTH ; dimensions (y, x)
-	dw ViridianForestEntranceBlocks, ViridianForestEntranceTextPointers, ViridianForestEntranceScript ; blocks, texts, scripts
-	db 0 ; connections
-	dw ViridianForestEntranceObject ; objects
+	db GATE
+	db VIRIDIAN_FOREST_ENTRANCE_HEIGHT, VIRIDIAN_FOREST_ENTRANCE_WIDTH
+	dw ViridianForestEntranceBlocks, ViridianForestEntranceTextPointers, ViridianForestEntranceScript
+	db 0
+	dw ViridianForestEntranceObject

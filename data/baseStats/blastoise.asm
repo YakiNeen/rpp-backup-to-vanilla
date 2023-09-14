@@ -11,18 +11,18 @@ db 210 ; base exp yield
 INCBIN "pic/bmon/blastoise.pic",0,1 ; 77, sprite dimensions
 dw BlastoisePicFront
 dw BlastoisePicBack
-; attacks known at lvl 0
-db TACKLE
-db TAIL_WHIP
-db BUBBLE
-db WATER_GUN
+; move tutor compatibility flags
+	m_tutor 3
+	m_tutor 11
+	m_tutor 0
+	m_tutor 0
 db 3 ; growth rate
 ; learnset
 	tmlearn 1,5,6,8
-	tmlearn 9,10,11,12,13,14,15
-	tmlearn 17,18,19,20
+	tmlearn 9,10,11,12,13,14,15,16
+	tmlearn 17,18,19
 	tmlearn 26,27,28,31,32
-	tmlearn 33,34,40
-	tmlearn 44
-	tmlearn 50,53,54
-db 0 ; padding
+	tmlearn 33,34,36,40
+	tmlearn 44,48
+	tmlearn 53,54,55
+db BANK(BlastoisePicFront)

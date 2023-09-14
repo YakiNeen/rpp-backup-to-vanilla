@@ -11,18 +11,18 @@ db 212 ; base exp yield
 INCBIN "pic/bmon/exeggutor.pic",0,1 ; 77, sprite dimensions
 dw ExeggutorPicFront
 dw ExeggutorPicBack
-; attacks known at lvl 0
-db BARRAGE
-db HYPNOSIS
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 5 ; growth rate
 ; learnset
-	tmlearn 6
+	tmlearn 3,5,6
 	tmlearn 9,10,15
-	tmlearn 20,21,22
-	tmlearn 29,30,31,32
-	tmlearn 33,34,36,37
-	tmlearn 44,46,47
+	tmlearn 21,22
+	tmlearn 29,31,32
+	tmlearn 33,34,40
+	tmlearn 42,44,46,47
 	tmlearn 50,54
-db 0 ; padding
+db BANK(ExeggutorPicFront)

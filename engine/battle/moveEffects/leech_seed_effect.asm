@@ -19,9 +19,9 @@ LeechSeedEffect_:
 	ld a, [de]
 	cp GRASS
 	jr z, .moveMissed
-	bit SEEDED, [hl]
+	bit Seeded, [hl]
 	jr nz, .moveMissed
-	set SEEDED, [hl]
+	set Seeded, [hl]
 	callab PlayCurrentMoveAnimation
 	ld hl, WasSeededText
 	jp PrintText

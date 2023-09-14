@@ -11,18 +11,18 @@ db 216 ; base exp yield
 INCBIN "pic/bmon/zapdos.pic",0,1 ; 77, sprite dimensions
 dw ZapdosPicFront
 dw ZapdosPicBack
-; attacks known at lvl 0
-db THUNDERSHOCK
-db DRILL_PECK
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 5 ; growth rate
 ; learnset
-	tmlearn 2,4,6
+	tmlearn 4,6
 	tmlearn 9,10,15
-	tmlearn 20,24
+	tmlearn 24
 	tmlearn 25,31,32
 	tmlearn 33,34,39
-	tmlearn 43,44,45
-	tmlearn 50,52,55
-db 0 ; padding
+	tmlearn 41,44,45
+	tmlearn 49,50,52
+db BANK(ZapdosPicFront)

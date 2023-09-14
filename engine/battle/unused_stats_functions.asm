@@ -1,3 +1,5 @@
+;TODO: Remove these and any reference to them, since they aren't used
+
 ; does nothing since no stats are ever selected (barring glitches)
 DoubleSelectedStats:
 	ld a, [H_WHOSETURN]

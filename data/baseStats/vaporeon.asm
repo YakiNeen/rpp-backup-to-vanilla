@@ -11,18 +11,18 @@ db 196 ; base exp yield
 INCBIN "pic/bmon/vaporeon.pic",0,1 ; 66, sprite dimensions
 dw VaporeonPicFront
 dw VaporeonPicBack
-; attacks known at lvl 0
-db TACKLE
-db SAND_ATTACK
-db QUICK_ATTACK
-db WATER_GUN
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
-	tmlearn 6,8
-	tmlearn 9,10,11,12,13,14,15
-	tmlearn 20
-	tmlearn 31,32
+	tmlearn 5,6,8
+	tmlearn 9,10,11,12,13,14,15,16
+	tmlearn 0
+	tmlearn 28,30,31,32
 	tmlearn 33,34,39,40
 	tmlearn 44
-	tmlearn 50,53
-db 0 ; padding
+	tmlearn 53,54,55
+db BANK(VaporeonPicFront)

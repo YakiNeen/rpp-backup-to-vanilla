@@ -10,7 +10,7 @@ sHallOfFame:: ds HOF_TEAM * HOF_TEAM_CAPACITY ; a598
 
 
 SECTION "Save Data", SRAM, BANK[1]
-	ds $598
+	ds $598 ; Possibly just filler data?
 
 sPlayerName::  ds NAME_LENGTH ; a598
 sMainData::    ds wMainDataEnd   - wMainDataStart ; a5a3

@@ -13,7 +13,8 @@ CableClub_DoBattleOrTrade:
 	ld b, 2
 	ld c, 12
 	call CableClub_TextBoxBorder
-	coord hl, 4, 10
+	call CableClub_DoBattleOrTrade_ColorHook
+	;coord hl, 4, 10
 	ld de, PleaseWaitString
 	call PlaceString
 	ld hl, wPlayerNumHits
@@ -57,8 +58,8 @@ CableClub_DoBattleOrTradeAgain:
 	ld [hli], a
 	dec b
 	jr nz, .zeroPlayerDataPatchListLoop
-	ld hl, wGrassRate
-	ld bc, wTrainerHeaderPtr - wGrassRate
+	ld hl, wLinkEnemyTrainerName
+	ld bc, wEnemyMonsEnd - wLinkEnemyTrainerName
 .zeroEnemyPartyLoop
 	xor a
 	ld [hli], a
@@ -186,7 +187,7 @@ CableClub_DoBattleOrTradeAgain:
 	dec c
 	jr nz, .copyEnemyNameLoop
 	ld de, wEnemyPartyCount
-	ld bc, wTrainerHeaderPtr - wEnemyPartyCount
+	ld bc, wEnemyMonsEnd - wEnemyPartyCount
 .copyEnemyPartyLoop
 	ld a, [hli]
 	cp SERIAL_NO_DATA_BYTE
@@ -284,13 +285,13 @@ CableClub_DoBattleOrTradeAgain:
 	predef HealParty
 	jp ReturnToCableClubRoom
 .trading
-	ld c, BANK(Music_GameCorner)
+	ld c, 0 ; BANK(Music_GameCorner)
 	ld a, MUSIC_GAME_CORNER
 	call PlayMusic
 	jr CallCurrentTradeCenterFunction
 
 PleaseWaitString:
-	db "PLEASE WAIT!@"
+	db "Please wait!@"
 
 CallCurrentTradeCenterFunction:
 	ld hl, TradeCenterPointerTable
@@ -533,7 +534,7 @@ TradeCenter_SelectMon:
 	ld [wTradeCenterPointerTableIndex], a
 	jp CallCurrentTradeCenterFunction
 .statsTrade
-	db "STATS     TRADE@"
+	db "Stats     Trade@"
 .selectedCancelMenuItem
 	ld a, [wCurrentMenuItem]
 	ld b, a
@@ -609,7 +610,7 @@ TradeCenter_DrawCancelBox:
 	jp PlaceString
 
 CancelTextString:
-	db "CANCEL@"
+	db "Cancel@"
 
 TradeCenter_PlaceSelectedEnemyMonMenuCursor:
 	ld a, [wSerialSyncAndExchangeNybbleReceiveData]
@@ -630,7 +631,7 @@ TradeCenter_DisplayStats:
 	jp TradeCenter_DrawCancelBox
 
 TradeCenter_DrawPartyLists:
-	coord hl, 0, 0
+	call TradeCenter_DrawPartyLists_ColorHook
 	ld b, 6
 	ld c, 18
 	call CableClub_TextBoxBorder
@@ -911,13 +912,13 @@ CableClub_Run:
 	ld a, l
 	ld [wTilesetCollisionPtr], a
 	xor a
-	ld [wGrassRate], a
+	ld [wLinkEnemyTrainerName], a
 	inc a ; LINK_STATE_IN_CABLE_CLUB
 	ld [wLinkState], a
 	ld [hJoy5], a
 	ld a, 10
 	ld [wAudioFadeOutControl], a
-	ld a, BANK(Music_Celadon)
+	ld a, 0 ; BANK(Music_Celadon)
 	ld [wAudioSavedROMBank], a
 	ld a, MUSIC_CELADON
 	ld [wNewSoundID], a

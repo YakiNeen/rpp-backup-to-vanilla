@@ -1,28 +1,28 @@
 ; function to draw various text boxes
 DisplayTextBoxID_:
-	ld a, [wTextBoxID]
-	cp TWO_OPTION_MENU
-	jp z, DisplayTwoOptionMenu
-	ld c, a
-	ld hl, TextBoxFunctionTable
-	ld de, 3
+	ld a,[wTextBoxID]
+	cp a,TWO_OPTION_MENU
+	jp z,DisplayTwoOptionMenu
+	ld c,a
+	ld hl,TextBoxFunctionTable
+	ld de,3
 	call SearchTextBoxTable
-	jr c, .functionTableMatch
-	ld hl, TextBoxCoordTable
-	ld de, 5
+	jr c,.functionTableMatch
+	ld hl,TextBoxCoordTable
+	ld de,5
 	call SearchTextBoxTable
-	jr c, .coordTableMatch
-	ld hl, TextBoxTextAndCoordTable
-	ld de, 9
+	jr c,.coordTableMatch
+	ld hl,TextBoxTextAndCoordTable
+	ld de,9
 	call SearchTextBoxTable
-	jr c, .textAndCoordTableMatch
+	jr c,.textAndCoordTableMatch
 .done
 	ret
 .functionTableMatch
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a ; hl = address of function
-	ld de, .done
+	ld a,[hli]
+	ld h,[hl]
+	ld l,a ; hl = address of function
+	ld de,.done
 	push de
 	jp hl ; jump to the function
 .coordTableMatch
@@ -37,14 +37,14 @@ DisplayTextBoxID_:
 	call TextBoxBorder
 	pop hl
 	call GetTextBoxIDText
-	ld a, [wd730]
+	ld a,[wd730]
 	push af
-	ld a, [wd730]
-	set 6, a ; no pauses between printing each letter
-	ld [wd730], a
+	ld a,[wd730]
+	set 6,a ; no pauses between printing each letter
+	ld [wd730],a
 	call PlaceString
 	pop af
-	ld [wd730], a
+	ld [wd730],a
 	call UpdateSprites
 	ret
 
@@ -53,12 +53,12 @@ DisplayTextBoxID_:
 SearchTextBoxTable:
 	dec de
 .loop
-	ld a, [hli]
-	cp $ff
-	jr z, .notFound
+	ld a,[hli]
+	cp a,$ff
+	jr z,.notFound
 	cp c
-	jr z, .found
-	add hl, de
+	jr z,.found
+	add hl,de
 	jr .loop
 .found
 	scf
@@ -74,31 +74,31 @@ SearchTextBoxTable:
 ; d = row of upper left corner
 ; e = column of upper left corner
 GetTextBoxIDCoords:
-	ld a, [hli] ; column of upper left corner
-	ld e, a
-	ld a, [hli] ; row of upper left corner
-	ld d, a
-	ld a, [hli] ; column of lower right corner
+	ld a,[hli] ; column of upper left corner
+	ld e,a
+	ld a,[hli] ; row of upper left corner
+	ld d,a
+	ld a,[hli] ; column of lower right corner
 	sub e
 	dec a
-	ld c, a     ; c = width
-	ld a, [hli] ; row of lower right corner
+	ld c,a     ; c = width
+	ld a,[hli] ; row of lower right corner
 	sub d
 	dec a
-	ld b, a     ; b = height
+	ld b,a     ; b = height
 	ret
 
 ; function to load a text address and text coordinates from the TextBoxTextAndCoordTable
 GetTextBoxIDText:
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a ; de = address of text
+	ld a,[hli]
+	ld e,a
+	ld a,[hli]
+	ld d,a ; de = address of text
 	push de ; save text address
-	ld a, [hli]
-	ld e, a ; column of upper left corner of text
-	ld a, [hl]
-	ld d, a ; row of upper left corner of text
+	ld a,[hli]
+	ld e,a ; column of upper left corner of text
+	ld a,[hl]
+	ld d,a ; row of upper left corner of text
 	call GetAddressOfScreenCoords
 	pop de ; restore text address
 	ret
@@ -112,17 +112,17 @@ GetTextBoxIDText:
 GetAddressOfScreenCoords:
 	push bc
 	coord hl, 0, 0
-	ld bc, 20
+	ld bc,20
 .loop ; loop to add d rows to the base address
-	ld a, d
+	ld a,d
 	and a
-	jr z, .addedRows
-	add hl, bc
+	jr z,.addedRows
+	add hl,bc
 	dec d
 	jr .loop
 .addedRows
 	pop bc
-	add hl, de
+	add hl,de
 	ret
 
 ; Format:
@@ -146,7 +146,7 @@ TextBoxCoordTable:
 	db $07,               0,  0, 11,  6
 	db LIST_MENU_BOX,     4,  2, 19, 12
 	db $10,               7,  0, 19, 17
-	db MON_SPRITE_POPUP,  6,  4, 14, 13
+	db MON_SPRITE_POPUP,  6,  4, 14, 12
 	db $ff ; terminator
 
 ; Format:
@@ -166,7 +166,7 @@ TextBoxTextAndCoordTable:
 	db 3,0   ; text coordinates
 
 	db USE_TOSS_MENU_TEMPLATE
-	db 13,10,19,14 ; text box coordinates
+	db 13,10,19,16 ; text box coordinates
 	dw UseTossText
 	db 15,11 ; text coordinates
 
@@ -218,13 +218,14 @@ TextBoxTextAndCoordTable:
 ; note that there is no terminator
 
 BuySellQuitText:
-	db   "BUY"
-	next "SELL"
-	next "QUIT@@"
+	db   "Buy"
+	next "Sell"
+	next "Quit@@"
 
 UseTossText:
-	db   "USE"
-	next "TOSS@"
+	db   "Use"
+	next "Info"
+	next "Toss@"
 
 JapaneseSaveMessageText:
 	db   "きろく"
@@ -235,7 +236,7 @@ JapaneseSpeedOptionsText:
 	next "おそい@"
 
 MoneyText:
-	db "MONEY@"
+	db "Money@"
 
 JapaneseMochimonoText:
 	db "もちもの@"
@@ -245,17 +246,17 @@ JapaneseMainMenuText:
 	next "さいしょから@"
 
 BattleMenuText:
-	db   "FIGHT ",$E1,$E2
-	next "ITEM  RUN@"
+	db   "Fight ",$E1,$E2
+	next "Pack  Run@"
 
 SafariZoneBattleMenuText:
-	db   "BALL×       BAIT"
-	next "THROW ROCK  RUN@"
+	db   "Ball×       Bait"
+	next "Rock        Run@"
 
 SwitchStatsCancelText:
-	db   "SWITCH"
-	next "STATS"
-	next "CANCEL@"
+	db   "Switch"
+	next "Stats"
+	next "Cancel@"
 
 JapaneseAhText:
 	db "アッ!@"
@@ -419,11 +420,14 @@ DisplayTwoOptionMenu:
 	ld hl, wd730
 	res 6, [hl] ; turn on the printing delay
 	ld a, [wTwoOptionMenuID]
+	cp BOY_GIRL_MENU
+	jr z, .noYesMenu
 	cp NO_YES_MENU
 	jr nz, .notNoYesMenu
 ; No/Yes menu
 ; this menu type ignores the B button
 ; it only seems to be used when confirming the deletion of a save file
+.noYesMenu
 	xor a
 	ld [wTwoOptionMenuID], a
 	ld a, [wFlags_0xcd60]
@@ -524,8 +528,8 @@ TwoOptionMenu_RestoreScreenTiles:
 TwoOptionMenuStrings:
 	db 4,3,0
 	dw .YesNoMenu
-	db 6,3,0
-	dw .NorthWestMenu
+	db 5,3,0
+	dw .BoyGirlMenu
 	db 6,3,0
 	dw .SouthEastMenu
 	db 6,3,0
@@ -540,26 +544,26 @@ TwoOptionMenuStrings:
 	dw .NoYesMenu
 
 .NoYesMenu
-	db   "NO"
-	next "YES@"
+	db   "No"
+	next "Yes@"
 .YesNoMenu
-	db   "YES"
-	next "NO@"
-.NorthWestMenu
-	db   "NORTH"
-	next "WEST@"
+	db   "Yes"
+	next "No@"
+.BoyGirlMenu
+	db   "Boy"
+	next "Girl@"
 .SouthEastMenu
-	db   "SOUTH"
-	next "EAST@"
+	db   "South"
+	next "East@"
 .NorthEastMenu
-	db   "NORTH"
-	next "EAST@"
+	db   "North"
+	next "East@"
 .TradeCancelMenu
-	db   "TRADE"
-	next "CANCEL@"
+	db   "Trade"
+	next "Cancel@"
 .HealCancelMenu
-	db   "HEAL"
-	next "CANCEL@"
+	db   "Heal"
+	next "Cancel@"
 
 DisplayFieldMoveMonMenu:
 	xor a
@@ -682,20 +686,21 @@ DisplayFieldMoveMonMenu:
 	jp PlaceString
 
 FieldMoveNames:
-	db "CUT@"
-	db "FLY@"
-	db "@"
-	db "SURF@"
-	db "STRENGTH@"
-	db "FLASH@"
-	db "DIG@"
-	db "TELEPORT@"
-	db "SOFTBOILED@"
+	db "Cut@"
+	db "Fly@"
+	db "Dive@" ; Unused
+	db "Surf@"
+	db "Strength@"
+	db "Flash@"
+	db "Dig@"
+	db "Teleport@"
+	db "Softboiled@"
+	db "Headbutt@"
 
 PokemonMenuEntries:
-	db   "STATS"
-	next "SWITCH"
-	next "CANCEL@"
+	db   "Stats"
+	next "Switch"
+	next "Cancel@"
 
 GetMonFieldMoves:
 	ld a, [wWhichPokemon]
@@ -757,11 +762,12 @@ GetMonFieldMoves:
 FieldMoveDisplayData:
 	db CUT, $01, $0C
 	db FLY, $02, $0C
-	db $B4, $03, $0C ; unused field move
+	db DIVE, $03, $0C ; Unused
 	db SURF, $04, $0C
 	db STRENGTH, $05, $0A
 	db FLASH, $06, $0C
 	db DIG, $07, $0C
 	db TELEPORT, $08, $0A
 	db SOFTBOILED, $09, $08
+	db HEADBUTT, $0A, $0A
 	db $ff ; list terminator

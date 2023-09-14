@@ -11,18 +11,18 @@ db 217 ; base exp yield
 INCBIN "pic/bmon/moltres.pic",0,1 ; 77, sprite dimensions
 dw MoltresPicFront
 dw MoltresPicBack
-; attacks known at lvl 0
-db PECK
-db FIRE_SPIN
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 5 ; growth rate
 ; learnset
-	tmlearn 2,4,6
+	tmlearn 4,6
 	tmlearn 9,10,15
-	tmlearn 20
+	tmlearn 22,23
 	tmlearn 31,32
-	tmlearn 33,34,38,39
-	tmlearn 43,44
+	tmlearn 33,34,37,38,39
+	tmlearn 41,44
 	tmlearn 50,52
-db 0 ; padding
+db BANK(MoltresPicFront)

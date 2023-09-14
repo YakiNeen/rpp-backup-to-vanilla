@@ -1,6 +1,6 @@
 IndigoPlateauLobby_h:
-	db MART ; tileset
+	db POKECENTER ; tileset
 	db INDIGO_PLATEAU_LOBBY_HEIGHT, INDIGO_PLATEAU_LOBBY_WIDTH ; dimensions (y, x)
 	dw IndigoPlateauLobbyBlocks, IndigoPlateauLobbyTextPointers, IndigoPlateauLobbyScript ; blocks, texts, scripts
-	db 0 ; connections
+	db $00 ; connections
 	dw IndigoPlateauLobbyObject ; objects

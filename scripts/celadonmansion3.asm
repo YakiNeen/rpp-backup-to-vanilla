@@ -25,6 +25,9 @@ WriterText:
 
 DirectorText:
 	TX_ASM
+	ld a, [wExtraFlags]
+	bit 3, a
+	jr nz, .alreadyGiven
 
 	; check pokédex
 	ld hl, wPokedexOwned
@@ -32,39 +35,81 @@ DirectorText:
 	call CountSetBits
 	ld a, [wNumSetBits]
 	cp 150
-	jr nc, .CompletedDex
+	jr nc, .Enough
+	
+	; if you haven't gotten it yet, and you don't have enough
 	ld hl, .GameDesigner
-	jr .done
-.CompletedDex
-	ld hl, .CompletedDexText
-.done
 	call PrintText
 	jp TextScriptEnd
 
+.Enough
+	ld hl, .GameDesignerGiveTicketText
+	call PrintText
+	ld b, EON_TICKET
+	ld c, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, .ReceivedEonTicketText
+	call PrintText
+	ld hl, wExtraFlags
+	set 3, [hl]
+.alreadyGiven
+	ld hl, .Already
+	call PrintText
+	jp TextScriptEnd
+	
+.bagFull
+	ld hl, .noRoom
+	call PrintText
+	jp TextScriptEnd
+	
 .GameDesigner
 	TX_FAR _GameDesignerText
 	db "@"
+	
+.Already
+	TX_FAR _GameDesignerAlreadyGivenText
+	db "@"
+	
+.noRoom
+	TX_FAR _NoMoreRoomForItemText
+	db "@"
+	
+.GameDesignerGiveTicketText
+	TX_FAR _GameDesignerGiveTicketText
+	db "@"
+	
+.ReceivedEonTicketText
+	TX_FAR _ReceivedEonTicketText
+	db $0B
+	db "@"
 
-.CompletedDexText
-	TX_FAR _CompletedDexText
+GameFreakPCText1:
+	TX_FAR _CeladonMansion3Text5
 	TX_BLINK
 	TX_ASM
-	callab DisplayDiploma
+	callba ProgrammerComputerScreen
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	jp TextScriptEnd
 
-GameFreakPCText1:
-	TX_FAR _CeladonMansion3Text5
-	db "@"
-
 GameFreakPCText2:
 	TX_FAR _CeladonMansion3Text6
-	db "@"
+	db $6
+	TX_ASM
+	callba TetrisComputerScreen
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	jp TextScriptEnd
 
 GameFreakPCText3:
 	TX_FAR _CeladonMansion3Text7
-	db "@"
+	db $6
+	TX_ASM
+	callba ScriptComputerScreen
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	jp TextScriptEnd
 
 GameFreakSignText:
 	TX_FAR _CeladonMansion3Text8

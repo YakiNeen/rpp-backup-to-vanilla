@@ -1,35 +1,40 @@
 const_value = 1
 
-	const MASTER_BALL   ; $01
-	const ULTRA_BALL    ; $02
-	const GREAT_BALL    ; $03
-	const POKE_BALL     ; $04
-	const TOWN_MAP      ; $05
-	const BICYCLE       ; $06
-	const SURFBOARD     ; $07 buggy?
-	const SAFARI_BALL   ; $08
-	const POKEDEX       ; $09
-	const MOON_STONE    ; $0A
-	const ANTIDOTE      ; $0B
-	const BURN_HEAL     ; $0C
-	const ICE_HEAL      ; $0D
-	const AWAKENING     ; $0E
-	const PARLYZ_HEAL   ; $0F
-	const FULL_RESTORE  ; $10
-	const MAX_POTION    ; $11
-	const HYPER_POTION  ; $12
-	const SUPER_POTION  ; $13
-	const POTION        ; $14
-	const BOULDERBADGE  ; $15
-	const CASCADEBADGE  ; $16
-SAFARI_BAIT           EQU $15 ; overload
-SAFARI_ROCK           EQU $16 ; overload
-	const THUNDERBADGE  ; $17
-	const RAINBOWBADGE  ; $18
-	const SOULBADGE     ; $19
-	const MARSHBADGE    ; $1A
-	const VOLCANOBADGE  ; $1B
-	const EARTHBADGE    ; $1C
+	const MASTER_BALL  ; $01
+	const ULTRA_BALL   ; $02
+	const GREAT_BALL   ; $03
+	const POKE_BALL    ; $04
+	const TOWN_MAP     ; $05
+	const BICYCLE      ; $06
+	const SURFBOARD    ; $07 buggy?
+	const SAFARI_BALL  ; $08
+	const POKEDEX      ; $09
+	const MOON_STONE   ; $0A
+	const ANTIDOTE     ; $0B
+	const BURN_HEAL    ; $0C
+	const ICE_HEAL     ; $0D
+	const AWAKENING    ; $0E
+	const PARLYZ_HEAL  ; $0F
+	const FULL_RESTORE ; $10
+	const MAX_POTION   ; $11
+	const HYPER_POTION ; $12
+	const SUPER_POTION ; $13
+	const POTION       ; $14
+
+; Used for Safari Zone
+	const SAFARI_BAIT  ; $15
+	const SAFARI_ROCK  ; $16
+
+; Event Items
+	const OLD_SEA_MAP  ; $17
+	const MYSTIC_TICKET; $18
+	const EON_TICKET   ; $19
+
+; Currently Unused Items
+	const TERU_SAMA_1A ; $1A
+	const TERU_SAMA_1B ; $1B
+	const TERU_SAMA_1C ; $1C
+
 	const ESCAPE_ROPE   ; $1D
 	const REPEL         ; $1E
 	const OLD_AMBER     ; $1F
@@ -45,13 +50,13 @@ SAFARI_ROCK           EQU $16 ; overload
 	const DOME_FOSSIL   ; $29
 	const HELIX_FOSSIL  ; $2A
 	const SECRET_KEY    ; $2B
-	const UNUSED_ITEM   ; $2C "?????"
+	const SUN_STONE     ; $2C
 	const BIKE_VOUCHER  ; $2D
 	const X_ACCURACY    ; $2E
 	const LEAF_STONE    ; $2F
 	const CARD_KEY      ; $30
 	const NUGGET        ; $31
-	const PP_UP_2       ; $32
+	const THIEF_BALL    ; $32
 	const POKE_DOLL     ; $33
 	const FULL_HEAL     ; $34
 	const REVIVE        ; $35
@@ -60,7 +65,7 @@ SAFARI_ROCK           EQU $16 ; overload
 	const SUPER_REPEL   ; $38
 	const MAX_REPEL     ; $39
 	const DIRE_HIT      ; $3A
-	const COIN          ; $3B
+	const COIN          ; $3B unused?
 	const FRESH_WATER   ; $3C
 	const SODA_POP      ; $3D
 	const LEMONADE      ; $3E
@@ -76,7 +81,7 @@ SAFARI_ROCK           EQU $16 ; overload
 	const SILPH_SCOPE   ; $48
 	const POKE_FLUTE    ; $49
 	const LIFT_KEY      ; $4A
-	const EXP_ALL       ; $4B
+	const EXP_SHARE     ; $4B
 	const OLD_ROD       ; $4C
 	const GOOD_ROD      ; $4D
 	const SUPER_ROD     ; $4E
@@ -85,6 +90,8 @@ SAFARI_ROCK           EQU $16 ; overload
 	const MAX_ETHER     ; $51
 	const ELIXER        ; $52
 	const MAX_ELIXER    ; $53
+
+; Only used for elevator menus
 	const FLOOR_B2F     ; $54
 	const FLOOR_B1F     ; $55
 	const FLOOR_1F      ; $56
@@ -100,6 +107,22 @@ SAFARI_ROCK           EQU $16 ; overload
 	const FLOOR_11F     ; $60
 	const FLOOR_B4F     ; $61
 
+; Berries start here
+	const ORAN_BERRY    ; $62
+	const SITRUS_BERRY  ; $63
+	const LEPPA_BERRY   ; $64
+	const PECHA_BERRY   ; $65
+	const RAWST_BERRY   ; $66
+	const ASPEAR_BERRY  ; $67
+	const CHESTO_BERRY  ; $68
+	const CHERI_BERRY   ; $69
+	const LUM_BERRY     ; $6A
+	const ACAI_BERRY    ; $6B
+
+; Dummy item used for Ferry list
+	const GO_HOME       ; $6C
+
+; Don't call actual item scripts
 const_value = $C4
 
 	const HM_01         ; $C4

@@ -14,7 +14,6 @@ const_value = 0
 
 ; overworld sprites
 const_value = 1
-
 	const SPRITE_RED                       ; $01
 	const SPRITE_BLUE                      ; $02
 	const SPRITE_OAK                       ; $03
@@ -64,7 +63,7 @@ const_value = 1
 	const SPRITE_FISHER2                   ; $2f
 	const SPRITE_BLACKBELT                 ; $30
 	const SPRITE_GUARD                     ; $31
-	const SPRITE_COP_GUARD                 ; $32
+	const SPRITE_ROCKET_F                  ; $32
 	const SPRITE_MOM                       ; $33
 	const SPRITE_BALDING_GUY               ; $34
 	const SPRITE_YOUNG_BOY                 ; $35
@@ -75,22 +74,62 @@ const_value = 1
 	const SPRITE_BRUNO                     ; $3a
 	const SPRITE_LORELEI                   ; $3b
 	const SPRITE_SEEL                      ; $3c
-	const SPRITE_BALL                      ; $3d
-	const SPRITE_OMANYTE                   ; $3e
-	const SPRITE_BOULDER                   ; $3f
-	const SPRITE_PAPER_SHEET               ; $40
-	const SPRITE_BOOK_MAP_DEX              ; $41
-	const SPRITE_CLIPBOARD                 ; $42
-	const SPRITE_SNORLAX                   ; $43
-	const SPRITE_OLD_AMBER_COPY            ; $44
-	const SPRITE_OLD_AMBER                 ; $45
-	const SPRITE_LYING_OLD_MAN_UNUSED_1    ; $46
-	const SPRITE_LYING_OLD_MAN_UNUSED_2    ; $47
-	const SPRITE_LYING_OLD_MAN             ; $48
+; New walking sprites added here
+	const SPRITE_BROCK                     ; $3d
+	const SPRITE_MISTY                     ; $3e
+	const SPRITE_SURGE                     ; $3f
+	const SPRITE_SABRINA                   ; $40
+	const SPRITE_KOGA                      ; $41
+	const SPRITE_BLAINE                    ; $42
+	const SPRITE_BRENDAN                   ; $43
+	const SPRITE_FLANNERY                  ; $44
+	const SPRITE_GREETER                   ; $45
+	const SPRITE_LAPRAS                    ; $46
+	const SPRITE_SURF_PIKACHU              ; $47
+	const SPRITE_LOOKER                    ; $48
+	const SPRITE_SWIMMER_F                 ; $49
+	const SPRITE_OFFICER_JENNY             ; $4a
+	const SPRITE_JESSIE                    ; $4b
+	const SPRITE_JAMES                     ; $4c
+	const SPRITE_HIRO                      ; $4d
+	const SPRITE_KRIS                      ; $4e
+	const SPRITE_SILVER                    ; $4f
+	const SPRITE_BILL
+; Sprites after this are only 1 frame
+	const SPRITE_BALL                      ; $50
+	const SPRITE_OMANYTE                   ; $51
+	const SPRITE_BOULDER                   ; $52
+	const SPRITE_PAPER_SHEET               ; $53
+	const SPRITE_BOOK                      ; $54
+	const SPRITE_CLIPBOARD                 ; $55
+	const SPRITE_SNORLAX                   ; $56
+	const SPRITE_BAG                       ; $57
+	const SPRITE_OLD_AMBER                 ; $58
+	const SPRITE_POKEDEX                   ; $59
+	const SPRITE_BERRY_TREE                ; $5a
+	const SPRITE_LYING_OLD_MAN             ; $5b
+	const SPRITE_SUDOWOODO                 ; $5c
+	const SPRITE_POKEY                     ; $5d
+	const SPRITE_DITTO                     ; $5e
+	const SPRITE_CELEBI                    ; $5f
+	const SPRITE_FOSSIL                    ; $60
+	const SPRITE_TOWN_MAP                  ; $61
+	const SPRITE_BENCH_GUY                 ; $62
+	
+	
+; Variable Sprite IDs Here
+VAR_SPRITE_1 EQU $F1
+VAR_SPRITE_2 EQU $F2
+VAR_SPRITE_3 EQU $F3
+VAR_SPRITE_4 EQU $F4
+VAR_SPRITE_5 EQU $F5
+VAR_SPRITE_6 EQU $F6
 
 ; different kinds of people events
 ITEM    EQU $80
 TRAINER EQU $40
+
+OW_POKEMON EQU $80
 
 BOULDER_MOVEMENT_BYTE_2 EQU $10
 
@@ -99,3 +138,27 @@ SPRITE_FACING_DOWN  EQU $00
 SPRITE_FACING_UP    EQU $04
 SPRITE_FACING_LEFT  EQU $08
 SPRITE_FACING_RIGHT EQU $0C
+
+
+; Moved these here instead of making them local
+ATK_PAL_GREY    EQU 0
+ATK_PAL_BLUE    EQU 1
+ATK_PAL_RED     EQU 2
+ATK_PAL_BROWN   EQU 3
+ATK_PAL_YELLOW  EQU 4
+ATK_PAL_GREEN   EQU 5
+ATK_PAL_ICE     EQU 6
+ATK_PAL_PURPLE  EQU 7
+; 8: color based on attack type
+; 9: don't change color palette (assume it's already set properly from elsewhere)
+
+; Moved these here instead of making them local
+PAL_OW_RED		EQU 0
+PAL_OW_BLUE		EQU 1
+PAL_OW_GREEN	EQU 2
+PAL_OW_BROWN	EQU 3
+PAL_OW_PURPLE	EQU 4
+PAL_OW_EMOJI	EQU 5
+PAL_OW_TREE		EQU 6
+PAL_OW_ROCK		EQU 7
+PAL_OW_RANDOM	EQU 8 ; pseudorandom

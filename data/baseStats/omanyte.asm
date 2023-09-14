@@ -11,18 +11,18 @@ db 120 ; base exp yield
 INCBIN "pic/bmon/omanyte.pic",0,1 ; 55, sprite dimensions
 dw OmanytePicFront
 dw OmanytePicBack
-; attacks known at lvl 0
-db WATER_GUN
-db WITHDRAW
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,8
 	tmlearn 9,10,11,12,13,14
-	tmlearn 20
-	tmlearn 31,32
-	tmlearn 33,34
-	tmlearn 44
-	tmlearn 50,53
-db 0 ; padding
+	tmlearn 0
+	tmlearn 26,27,31,32
+	tmlearn 33,34,35,36
+	tmlearn 44,48
+	tmlearn 53,54,55
+db BANK(OmanytePicFront)

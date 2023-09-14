@@ -11,18 +11,18 @@ db 199 ; base exp yield
 INCBIN "pic/bmon/omastar.pic",0,1 ; 66, sprite dimensions
 dw OmastarPicFront
 dw OmastarPicBack
-; attacks known at lvl 0
-db WATER_GUN
-db WITHDRAW
-db HORN_ATTACK
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,7,8
 	tmlearn 9,10,11,12,13,14,15
-	tmlearn 17,19,20
-	tmlearn 31,32
-	tmlearn 33,34,40
-	tmlearn 44
-	tmlearn 50,53
-db 0 ; padding
+	tmlearn 17,19
+	tmlearn 26,27,31,32
+	tmlearn 33,34,35,36
+	tmlearn 44,48
+	tmlearn 53,54,55
+db BANK(OmastarPicFront)

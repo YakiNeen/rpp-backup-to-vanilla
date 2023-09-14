@@ -2,7 +2,9 @@ DayCareMScript:
 	jp EnableAutoTextBoxDrawing
 
 DayCareMTextPointers:
-	dw DayCareMText1
+	dw DayCareMText1 ; Day Care Lady
+	dw DayCareMText2 ; Day Care Man
+	dw DayCareMText3 ; Ditto
 
 DayCareMText1:
 	TX_ASM
@@ -266,4 +268,13 @@ DayCareHeresYourMonText:
 
 DayCareNotEnoughMoneyText:
 	TX_FAR _DayCareNotEnoughMoneyText
+	db "@"
+
+DayCareMText2: ; Day Care Man
+	TX_ASM
+	callba DayCareManScript
+	jp TextScriptEnd
+	
+DayCareMText3: ; Ditto
+	TX_FAR _DayCareMText3
 	db "@"

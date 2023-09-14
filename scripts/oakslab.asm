@@ -350,7 +350,7 @@ OaksLabScript10:
 	call SetSpriteFacingDirectionAndDelay
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
-	ld c, BANK(Music_MeetRival)
+	ld c, 0 ; BANK(Music_MeetRival)
 	ld a, MUSIC_MEET_RIVAL
 	call PlayMusic
 	ld a, $f
@@ -381,6 +381,8 @@ OaksLabScript11:
 	ret nz
 
 	; define which team rival uses, and fight it
+	ld a, 1
+	ld [wIsTrainerBattle], a
 	ld a, OPP_SONY1
 	ld [wCurOpponent], a
 	ld a, [wRivalStarter]
@@ -415,6 +417,8 @@ OaksLabScript11:
 	ret
 
 OaksLabScript12:
+	xor a
+	ld [wIsTrainerBattle], a
 	ld a, $f0
 	ld [wJoyIgnore], a
 	ld a, PLAYER_DIR_UP
@@ -981,7 +985,7 @@ OaksLabText5:
 	predef DisplayDexRating
 	jp .asm_1d2ed
 .asm_1d279
-	ld b, POKE_BALL
+	ld b,POKE_BALL
 	call IsItemInBag
 	jr nz, .asm_1d2e7
 	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
@@ -1215,7 +1219,11 @@ OaksLabText25:
 
 OaksLabText26:
 	TX_FAR _OaksLabText26
-	db "@"
+	db $11 ; play received item sound
+	TX_ASM
+	lb bc, POKE_BALL,5
+	call GiveItem
+	jp TextScriptEnd
 
 OaksLabText27:
 	TX_FAR _OaksLabText27

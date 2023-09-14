@@ -58,7 +58,6 @@ PokemonTower7Script3:
 	ld [wSpriteIndex], a
 	ld [wTrainerHeaderFlagBit], a
 	ld [wUnusedDA38], a
-	ld a, $0
 	ld [wPokemonTower7CurScript], a
 	ld [wCurMapScript], a
 	ret

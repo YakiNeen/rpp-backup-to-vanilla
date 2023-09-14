@@ -11,18 +11,18 @@ db 91 ; base exp yield
 INCBIN "pic/bmon/growlithe.pic",0,1 ; 55, sprite dimensions
 dw GrowlithePicFront
 dw GrowlithePicBack
-; attacks known at lvl 0
-db BITE
-db ROAR
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 5 ; growth rate
 ; learnset
 	tmlearn 6,8
-	tmlearn 9,10
-	tmlearn 20,23
-	tmlearn 28,31,32
-	tmlearn 33,34,38,39,40
-	tmlearn 44
-	tmlearn 50
-db 0 ; padding
+	tmlearn 9,10,16
+	tmlearn 18,22,23
+	tmlearn 28,32,33
+	tmlearn 34,37,38,39,40
+	tmlearn 41,44
+	tmlearn 54
+db BANK(GrowlithePicFront)

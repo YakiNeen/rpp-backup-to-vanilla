@@ -1,15 +1,17 @@
 DayCareMObject:
 	db $a ; border block
 
-	db 2 ; warps
-	warp 2, 7, 4, -1
-	warp 3, 7, 4, -1
+	db $2 ; warps
+	db $7, $2, $4, $ff
+	db $7, $3, $4, $ff
 
-	db 0 ; signs
+	db $0 ; signs
 
-	db 1 ; objects
-	object SPRITE_GENTLEMAN, 2, 3, STAY, RIGHT, 1 ; person
+	db $3 ; objects
+	object SPRITE_OLD_MEDIUM_WOMAN, $2, $3, STAY, RIGHT, $1 ; person
+    object SPRITE_OLD_PERSON, $5, $3, STAY, LEFT, $2 ; person
+    object SPRITE_DITTO, $6, $1, STAY, NONE, $3 ; person
 
 	; warp-to
-	warp_to 2, 7, DAYCAREM_WIDTH
-	warp_to 3, 7, DAYCAREM_WIDTH
+	EVENT_DISP DAYCAREM_WIDTH, $7, $2
+	EVENT_DISP DAYCAREM_WIDTH, $7, $3

@@ -4,6 +4,10 @@ LoadSAV:
 	call ClearScreen
 	call LoadFontTilePatterns
 	call LoadTextBoxTilePatterns
+
+	ld a, 1
+	ld [wHaltAudio], a
+
 	call LoadSAV0
 	jr c, .badsum
 	call LoadSAV1
@@ -25,6 +29,9 @@ LoadSAV:
 	ld a, $1 ; bad checksum
 .goodsum
 	ld [wSaveFileStatus], a
+
+	ld a, 0
+	ld [wHaltAudio], a
 	ret
 
 FileDataDestroyedText:
@@ -139,16 +146,16 @@ LoadSAVIgnoreBadCheckSum:
 
 SaveSAV:
 	callba PrintSaveScreenText
-	ld hl, WouldYouLikeToSaveText
+	ld hl,WouldYouLikeToSaveText
 	call SaveSAVConfirm
 	and a   ;|0 = Yes|1 = No|
 	ret nz
-	ld a, [wSaveFileStatus]
+	ld a,[wSaveFileStatus]
 	dec a
-	jr z, .save
+	jr z,.save
 	call SAVCheckRandomID
-	jr z, .save
-	ld hl, OlderFileWillBeErasedText
+	jr z,.save
+	ld hl,OlderFileWillBeErasedText
 	call SaveSAVConfirm
 	and a
 	ret nz
@@ -158,16 +165,16 @@ SaveSAV:
 	lb bc, 4, 18
 	call ClearScreenArea
 	coord hl, 1, 14
-	ld de, NowSavingString
+	ld de,NowSavingString
 	call PlaceString
-	ld c, 120
+	ld c,120
 	call DelayFrames
-	ld hl, GameSavedText
+	ld hl,GameSavedText
 	call PrintText
 	ld a, SFX_SAVE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-	ld c, 30
+	ld c,30
 	jp DelayFrames
 
 NowSavingString:
@@ -177,10 +184,10 @@ SaveSAVConfirm:
 	call PrintText
 	coord hl, 0, 7
 	lb bc, 8, 1
-	ld a, TWO_OPTION_MENU
-	ld [wTextBoxID], a
+	ld a,TWO_OPTION_MENU
+	ld [wTextBoxID],a
 	call DisplayTextBoxID ; yes/no menu
-	ld a, [wCurrentMenuItem]
+	ld a,[wCurrentMenuItem]
 	ret
 
 WouldYouLikeToSaveText:
@@ -274,9 +281,18 @@ SaveSAVtoSRAM2:
 SaveSAVtoSRAM:
 	ld a, $2
 	ld [wSaveFileStatus], a
+
+	ld a, 1
+	ld [wHaltAudio], a
+
 	call SaveSAVtoSRAM0
 	call SaveSAVtoSRAM1
-	jp SaveSAVtoSRAM2
+	call SaveSAVtoSRAM2
+
+	ld a, 0
+	ld [wHaltAudio], a
+
+	ret
 
 SAVCheckSum:
 ;Check Sum (result[1 byte] is complemented)
@@ -391,6 +407,9 @@ WhenYouChangeBoxText:
 
 CopyBoxToOrFromSRAM:
 ; copy an entire box from hl to de with b as the SRAM bank
+	ld a, 1
+	ld [wHaltAudio], a
+
 	push hl
 	ld a, SRAM_ENABLE
 	ld [MBC1SRamEnable], a
@@ -416,6 +435,9 @@ CopyBoxToOrFromSRAM:
 	xor a
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamEnable], a
+
+	xor a
+	ld [wHaltAudio], a
 	ret
 
 DisplayChangeBoxMenu:
@@ -494,25 +516,28 @@ ChooseABoxText:
 	db "@"
 
 BoxNames:
-	db   "BOX 1"
-	next "BOX 2"
-	next "BOX 3"
-	next "BOX 4"
-	next "BOX 5"
-	next "BOX 6"
-	next "BOX 7"
-	next "BOX 8"
-	next "BOX 9"
-	next "BOX10"
-	next "BOX11"
-	next "BOX12@"
+	db   "Box 1"
+	next "Box 2"
+	next "Box 3"
+	next "Box 4"
+	next "Box 5"
+	next "Box 6"
+	next "Box 7"
+	next "Box 8"
+	next "Box 9"
+	next "Box10"
+	next "Box11"
+	next "Box12@"
 
 BoxNoText:
-	db "BOX No.@"
+	db "Box No.@"
 
 EmptyAllSRAMBoxes:
 ; marks all boxes in SRAM as empty (initialisation for the first time the
 ; player changes the box)
+	ld a, 1
+	ld [wHaltAudio], a
+
 	ld a, SRAM_ENABLE
 	ld [MBC1SRamEnable], a
 	ld a, $1
@@ -526,6 +551,9 @@ EmptyAllSRAMBoxes:
 	xor a
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamEnable], a
+
+	xor a
+	ld [wHaltAudio], a
 	ret
 
 EmptySRAMBoxesInBank:
@@ -557,6 +585,9 @@ EmptySRAMBox:
 	ret
 
 GetMonCountsForAllBoxes:
+	ld a, 1
+	ld [wHaltAudio], a
+
 	ld hl, wBoxMonCounts
 	push hl
 	ld a, SRAM_ENABLE
@@ -583,6 +614,8 @@ GetMonCountsForAllBoxes:
 	ld a, [wNumInBox]
 	ld [hl], a
 
+	xor a
+	ld [wHaltAudio], a
 	ret
 
 GetMonCountsForBoxesInBank:
@@ -604,34 +637,40 @@ SAVCheckRandomID:
 ;checks if Sav file is the same by checking player's name 1st letter ($a598)
 ; and the two random numbers generated at game beginning
 ;(which are stored at wPlayerID)s
-	ld a, $0a
-	ld [MBC1SRamEnable], a
-	ld a, $01
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamBank], a
-	ld a, [sPlayerName]
+	ld a, 1
+	ld [wHaltAudio], a
+
+	ld a,$0a
+	ld [MBC1SRamEnable],a
+	ld a,$01
+	ld [MBC1SRamBankingMode],a
+	ld [MBC1SRamBank],a
+	ld a,[sPlayerName]
 	and a
-	jr z, .next
-	ld hl, sPlayerName
+	jr z,.next
+	ld hl,sPlayerName
 	ld bc, sMainDataCheckSum - sPlayerName
 	call SAVCheckSum
-	ld c, a
-	ld a, [sMainDataCheckSum]
+	ld c,a
+	ld a,[sMainDataCheckSum]
 	cp c
-	jr nz, .next
-	ld hl, sMainData + (wPlayerID - wMainDataStart) ; player ID
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	ld a, [wPlayerID]
+	jr nz,.next
+	ld hl,sMainData + (wPlayerID - wMainDataStart) ; player ID
+	ld a,[hli]
+	ld h,[hl]
+	ld l,a
+	ld a,[wPlayerID]
 	cp l
-	jr nz, .next
-	ld a, [wPlayerID + 1]
+	jr nz,.next
+	ld a,[wPlayerID + 1]
 	cp h
 .next
-	ld a, $00
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
+	ld a,$00
+	ld [MBC1SRamBankingMode],a
+	ld [MBC1SRamEnable],a
+
+	xor a
+	ld [wHaltAudio], a
 	ret
 
 SaveHallOfFameTeams:
@@ -670,6 +709,9 @@ LoadHallOfFameTeams:
 	; fallthrough
 
 HallOfFame_Copy:
+	ld a, 1
+	ld [wHaltAudio], a
+
 	ld a, SRAM_ENABLE
 	ld [MBC1SRamEnable], a
 	ld a, $1
@@ -680,9 +722,15 @@ HallOfFame_Copy:
 	xor a
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamEnable], a
+
+	xor a
+	ld [wHaltAudio], a
 	ret
 
 ClearSAV:
+	ld a, 1
+	ld [wHaltAudio], a
+
 	ld a, SRAM_ENABLE
 	ld [MBC1SRamEnable], a
 	ld a, $1
@@ -698,6 +746,9 @@ ClearSAV:
 	xor a
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamEnable], a
+
+	xor a
+	ld [wHaltAudio], a
 	ret
 
 PadSRAM_FF:

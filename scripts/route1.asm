@@ -4,6 +4,7 @@ Route1Script:
 Route1TextPointers:
 	dw Route1Text1
 	dw Route1Text2
+	dw Route1Tree1
 	dw Route1Text3
 
 Route1Text1:
@@ -50,3 +51,10 @@ Route1Text2:
 Route1Text3:
 	TX_FAR _Route1Text3
 	db "@"
+	
+Route1Tree1:
+	TX_ASM
+	ld a, 1 ; Which berry tree
+	ld [wWhichTrade], a
+	callba BerryTreeScript
+	jp TextScriptEnd

@@ -143,6 +143,10 @@ Route24TrainerHeader5:
 
 Route24Text1:
 	TX_ASM
+	; make player face the rocket
+	ld a, 1
+	ld [wPlayerMovingDirection], a
+	; original script continues below
 	ResetEvent EVENT_NUGGET_REWARD_AVAILABLE
 	CheckEvent EVENT_GOT_NUGGET
 	jr nz, .asm_514f9

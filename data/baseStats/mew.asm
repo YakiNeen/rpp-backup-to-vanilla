@@ -12,11 +12,11 @@ db 64 ; base exp yield
 INCBIN "pic/bmon/mew.pic",0,1 ; 55, sprite dimensions
 dw MewPicFront
 dw MewPicBack
-; attacks known at lvl 0
-db POUND
-db 0
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 5,6,7,8
+	m_tutor 9,10,11
+	m_tutor 0
+	m_tutor 0
 db 3 ; growth rate
 ; learnset
 	tmlearn 1,2,3,4,5,6,7,8
@@ -26,4 +26,4 @@ db 3 ; growth rate
 	tmlearn 33,34,35,36,37,38,39,40
 	tmlearn 41,42,43,44,45,46,47,48
 	tmlearn 49,50,51,52,53,54,55,56
-db %11111111 ; usually spacing
+db BANK(MewPicFront)

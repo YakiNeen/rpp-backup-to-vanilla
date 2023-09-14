@@ -147,14 +147,15 @@ charmap "ゅ", $E1
 charmap "ょ", $E2
 charmap "ー", $E3
 
-charmap "<pkmn>", $4A ; PkMn
+charmap "_", $1F ; special linebreak for area names
+charmap "[pkmn]", $4A ; PkMn
 charmap "@", $50
-charmap "<PLAYER>", $52
-charmap "<RIVAL>", $53
+charmap "[PLAYER]", $52
+charmap "[RIVAL]", $53
 charmap "#", $54
 ;charmap "POKé", $54
-charmap "<TARGET>", $59
-charmap "<USER>", $5A
+charmap "[TARGET]", $59
+charmap "[USER]", $5A
 charmap "′", $71
 charmap "″", $73
 charmap "№", $74
@@ -233,6 +234,7 @@ charmap "'s", $BD
 charmap "'t", $BE
 charmap "'v", $BF
 
+charmap "[SHINY]",$DF
 charmap "'", $E0
 
 charmap "-", $E3
@@ -242,6 +244,8 @@ charmap "?", $E6
 charmap "!", $E7
 charmap ".", $E8
 
+charmap "+", $EA
+charmap "&", $EB
 charmap "▷", $EC
 charmap "▶", $ED
 charmap "▲", $ED

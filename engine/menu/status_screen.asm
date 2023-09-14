@@ -105,11 +105,11 @@ StatusScreen:
 	push af
 	xor a
 	ld [hTilesetType], a
-	coord hl, 19, 1
-	lb bc, 6, 10
+	coord hl, 19, 3
+	lb bc, 2, 8
 	call DrawLineBox ; Draws the box around name, HP and status
-	ld de, -6
-	add hl, de
+	coord hl, 2, 7
+	nop
 	ld [hl], "⠄" ; . after No ("." is a different one)
 	dec hl
 	ld [hl], "№"
@@ -123,8 +123,31 @@ StatusScreen:
 	predef DrawHP
 	ld hl, wStatusScreenHPBarColor
 	call GetHealthBarColor
+	; is mon supposed to be shiny?
+	ld b, Bank(IsMonShiny)
+	ld hl, IsMonShiny
+	ld de, wLoadedMonDVs
+	call Bankswitch
+	ld hl, wShinyMonFlag
+	jr nz, .shiny
+	res 0, [hl]
+	jr .setPAL
+.shiny
+	set 0, [hl]
+.setPAL
 	ld b, SET_PAL_STATUS_SCREEN
 	call RunPaletteCommand
+	coord de, 18, 5
+	ld a, [wBattleMonLevel]
+	push af
+	ld a, [wLoadedMonLevel]
+	ld [wBattleMonLevel], a
+	push af
+	callba PrintEXPBar
+	pop af
+	ld [wLoadedMonLevel], a
+	pop af
+	ld [wBattleMonLevel], a
 	coord hl, 16, 6
 	ld de, wLoadedMonStatus
 	call PrintStatusCondition
@@ -164,6 +187,10 @@ StatusScreen:
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
+	call PrintShinySymbol
+	ld a, [wLoadedMonSpecies]
+	ld [wGenderTemp], a
+	call PrintGenderStatusScreen
 	ld d, $0
 	call PrintStatsBox
 	call Delay3
@@ -205,20 +232,20 @@ NamePointers2:
 	dw wDayCareMonName
 
 Type1Text:
-	db "TYPE1/", $4e
+	db "Type 1", $4e
 
 Type2Text:
-	db "TYPE2/", $4e
+	db "Type 2", $4e
 
 IDNoText:
-	db $73, "№/", $4e
+	db $73, "№ ", $4e
 
 OTText:
-	db   "OT/"
+	db   "OT "
 	next "@"
 
 StatusText:
-	db "STATUS/@"
+	db "Status:@"
 
 OKText:
 	db "OK@"
@@ -244,6 +271,41 @@ DrawLineBox:
 PTile: ; This is a single 1bpp "P" tile
 	INCBIN "gfx/p_tile.1bpp"
 PTileEnd:
+
+PrintShinySymbol:
+	; check if mon is shiny
+	ld b, Bank(IsMonShiny)
+	ld hl, IsMonShiny
+	ld de, wLoadedMonDVs
+	call Bankswitch
+	ret z
+	; draw the shiny symbol
+	coord hl, 0, 0
+	ld a, "[SHINY]"
+	ld [hl], a
+	ret
+
+PrintGenderStatusScreen: ; called on status screen
+	; get gender
+	ld de, wLoadedMonDVs
+	callba GetMonGender
+	ld a, [wGenderTemp]
+	and a
+	jr z, .noGender
+	dec a
+	jr z, .male
+	; else female
+	ld a, "♀"
+	jr .printSymbol
+.male
+	ld a, "♂"
+	jr .printSymbol
+.noGender
+	ld a, " "
+.printSymbol
+	coord hl, 17, 2
+	ld [hl], a
+	ret
 
 PrintStatsBox:
 	ld a, d
@@ -289,10 +351,10 @@ PrintStat:
 	ret
 
 StatsText:
-	db   "ATTACK"
-	next "DEFENSE"
-	next "SPEED"
-	next "SPECIAL@"
+	db   "Attack"
+	next "Defense"
+	next "Speed"
+	next "Special@"
 
 StatusScreen2:
 	ld a, [hTilesetType]
@@ -311,8 +373,9 @@ StatusScreen2:
 	coord hl, 9, 2
 	lb bc, 5, 10
 	call ClearScreenArea ; Clear under name
-	coord hl, 19, 3
-	ld [hl], $78
+	coord hl, 19, 1
+	lb bc, 6, 10
+	call DrawLineBox ; Draws the box around name, HP and status
 	coord hl, 0, 8
 	ld b, 8
 	ld c, 18
@@ -463,8 +526,8 @@ CalcExpToLevelUp:
 	ret
 
 StatusScreenExpText:
-	db   "EXP POINTS"
-	next "LEVEL UP@"
+	db   "Exp.Points"
+	next "Next@"
 
 StatusScreen_ClearName:
 	ld bc, 10

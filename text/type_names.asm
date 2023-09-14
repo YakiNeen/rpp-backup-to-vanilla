@@ -9,18 +9,18 @@ TypeNames:
 	dw .Bird
 	dw .Bug
 	dw .Ghost
-
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
-	dw .Normal
+	dw .Steel
+	
+	dw .Unk    ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
+	dw .Normal ; Unused
 
 	dw .Fire
 	dw .Water
@@ -29,20 +29,26 @@ TypeNames:
 	dw .Psychic
 	dw .Ice
 	dw .Dragon
+	dw .Dark
+	dw .Fairy
 
-.Normal:   db "NORMAL@"
-.Fighting: db "FIGHTING@"
-.Flying:   db "FLYING@"
-.Poison:   db "POISON@"
-.Fire:     db "FIRE@"
-.Water:    db "WATER@"
-.Grass:    db "GRASS@"
-.Electric: db "ELECTRIC@"
-.Psychic:  db "PSYCHIC@"
-.Ice:      db "ICE@"
-.Ground:   db "GROUND@"
-.Rock:     db "ROCK@"
-.Bird:     db "BIRD@"
-.Bug:      db "BUG@"
-.Ghost:    db "GHOST@"
-.Dragon:   db "DRAGON@"
+.Normal:   db "Normal@"
+.Fighting: db "Fighting@"
+.Flying:   db "Flying@"
+.Poison:   db "Poison@"
+.Fire:     db "Fire@"
+.Water:    db "Water@"
+.Grass:    db "Grass@"
+.Electric: db "Electric@"
+.Psychic:  db "Psychic@"
+.Ice:      db "Ice@"
+.Ground:   db "Ground@"
+.Rock:     db "Rock@"
+.Bird:     db "Bird@"
+.Bug:      db "Bug@"
+.Ghost:    db "Ghost@"
+.Dragon:   db "Dragon@"
+.Steel:    db "Steel@"
+.Dark:     db "Dark@"
+.Fairy:    db "Fairy@"
+.Unk       db "???@"

@@ -22,10 +22,10 @@ VermilionGymScript_5ca4c:
 	jp LoadGymLeaderAndCityName
 
 Gym3CityName:
-	db "VERMILION CITY@"
+	db "Vermilion City@"
 
 Gym3LeaderName:
-	db "LT.SURGE@"
+	db "Lt. Surge@"
 
 VermilionGymScript_5ca6d:
 	CheckEvent EVENT_2ND_LOCK_OPENED
@@ -79,9 +79,7 @@ VermilionGymScript_5caaa:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_5cad3
-	ld hl, wObtainedBadges
-	set 2, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 2, [hl]
 
 	; deactivate gym trainers
@@ -246,7 +244,7 @@ VermilionGymAfterBattleText3:
 
 VermilionGymText5:
 	TX_ASM
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedKantoBadges]
 	bit 2, a
 	jr nz, .asm_5cbeb
 	ld hl, VermilionGymText_5cbf4

@@ -9,7 +9,7 @@ ENDM
 	mapconst VIRIDIAN_CITY,              18, 20 ; $01
 	mapconst PEWTER_CITY,                18, 20 ; $02
 	mapconst CERULEAN_CITY,              18, 20 ; $03
-	mapconst LAVENDER_TOWN,               9, 10 ; $04
+	mapconst LAVENDER_TOWN,               9, 12 ; $04
 	mapconst VERMILION_CITY,             18, 20 ; $05
 	mapconst CELADON_CITY,               18, 25 ; $06
 	mapconst FUCHSIA_CITY,               18, 20 ; $07
@@ -24,7 +24,7 @@ ENDM
 	mapconst ROUTE_5,                    18, 10 ; $10
 	mapconst ROUTE_6,                    18, 10 ; $11
 	mapconst ROUTE_7,                     9, 10 ; $12
-	mapconst ROUTE_8,                     9, 30 ; $13
+	mapconst ROUTE_8,                     9, 28 ; $13
 	mapconst ROUTE_9,                     9, 30 ; $14
 	mapconst ROUTE_10,                   36, 10 ; $15
 	mapconst ROUTE_11,                    9, 30 ; $16
@@ -74,13 +74,13 @@ ENDM
 	mapconst BIKE_SHOP,                   4,  4 ; $42
 	mapconst CERULEAN_MART,               4,  4 ; $43
 	mapconst MT_MOON_POKECENTER,          4,  7 ; $44
-	mapconst TRASHED_HOUSE_COPY,          4,  4 ; $45
+	mapconst MT_MOON_SQUARE_COPY,         9, 15 ; $45
 	mapconst ROUTE_5_GATE,                3,  4 ; $46
 	mapconst PATH_ENTRANCE_ROUTE_5,       4,  4 ; $47
 	mapconst DAYCAREM,                    4,  4 ; $48
 	mapconst ROUTE_6_GATE,                3,  4 ; $49
 	mapconst PATH_ENTRANCE_ROUTE_6,       4,  4 ; $4A
-	mapconst PATH_ENTRANCE_ROUTE_6_COPY,  4,  4 ; $4B
+	mapconst MT_MOON_SQUARE_HOUSE,        4,  4 ; $4B
 	mapconst ROUTE_7_GATE,                4,  3 ; $4C
 	mapconst PATH_ENTRANCE_ROUTE_7,       4,  4 ; $4D
 	mapconst PATH_ENTRANCE_ROUTE_7_COPY,  4,  4 ; $4E
@@ -110,21 +110,21 @@ ENDM
 	mapconst SS_ANNE_8,                   8, 12 ; $66
 	mapconst SS_ANNE_9,                   8, 12 ; $67
 	mapconst SS_ANNE_10,                  8, 12 ; $68
-	mapconst UNUSED_MAP_69,               0,  0 ; $69
-	mapconst UNUSED_MAP_6A,               0,  0 ; $6A
-	mapconst UNUSED_MAP_6B,               0,  0 ; $6B
+	mapconst MT_MOON_SQUARE,              9, 15 ; $69
+	mapconst MT_MOON_SHOP,                4,  4 ; $6A
+	mapconst VERMILION_FERRY_DOCK,        6,  6 ; $6B
 	mapconst VICTORY_ROAD_1,              9, 10 ; $6C
-	mapconst UNUSED_MAP_6D,               0,  0 ; $6D
-	mapconst UNUSED_MAP_6E,               0,  0 ; $6E
-	mapconst UNUSED_MAP_6F,               0,  0 ; $6F
-	mapconst UNUSED_MAP_70,               0,  0 ; $70
+	mapconst FARAWAY_ISLAND_OUTSIDE,     23, 17 ; $6D
+	mapconst FARAWAY_ISLAND_INSIDE,      13, 15 ; $6E
+	mapconst SOUTHERN_ISLAND_OUTSIDE,    15, 17 ; $6F
+	mapconst SOUTHERN_ISLAND_INSIDE,     12, 14 ; $70
 	mapconst LANCES_ROOM,                13, 13 ; $71
-	mapconst UNUSED_MAP_72,               0,  0 ; $72
-	mapconst UNUSED_MAP_73,               0,  0 ; $73
-	mapconst UNUSED_MAP_74,               0,  0 ; $74
-	mapconst UNUSED_MAP_75,               0,  0 ; $75
+	mapconst NAVEL_ROCK_FERRY_DOCK,       6,  6 ; $72
+	mapconst NAVEL_ROCK_OUTSIDE,          9, 10 ; $73
+	mapconst NAVEL_ROCK_CAVE_1,           4,  4 ; $74
+	mapconst NAVEL_ROCK_CAVE_2,          18, 20 ; $75
 	mapconst HALL_OF_FAME,                4,  5 ; $76
-	mapconst UNDERGROUND_PATH_NS,        24,  4 ; $77
+	mapconst UNDERGROUND_PATH_NS,        23,  4 ; $77
 	mapconst CHAMPIONS_ROOM,              4,  4 ; $78
 	mapconst UNDERGROUND_PATH_WE,         4, 25 ; $79
 	mapconst CELADON_MART_1,              4, 10 ; $7A
@@ -178,7 +178,7 @@ ENDM
 	mapconst CINNABAR_LAB_4,              4,  4 ; $AA
 	mapconst CINNABAR_POKECENTER,         4,  7 ; $AB
 	mapconst CINNABAR_MART,               4,  4 ; $AC
-	mapconst CINNABAR_MART_COPY,          4,  4 ; $AD
+	mapconst INSIDE_FERRY,                4,  5 ; $AD
 	mapconst INDIGO_PLATEAU_LOBBY,        6,  8 ; $AE
 	mapconst COPYCATS_HOUSE_1F,           4,  4 ; $AF
 	mapconst COPYCATS_HOUSE_2F,           4,  4 ; $B0
@@ -209,8 +209,8 @@ ENDM
 	mapconst ROCKET_HIDEOUT_3,           14, 15 ; $C9
 	mapconst ROCKET_HIDEOUT_4,           12, 15 ; $CA
 	mapconst ROCKET_HIDEOUT_ELEVATOR,     4,  3 ; $CB
-	mapconst UNUSED_MAP_CC,               0,  0 ; $CC
-	mapconst UNUSED_MAP_CD,               0,  0 ; $CD
+	mapconst ROUTE_19_GATE,               3,  4 ; $CC
+	mapconst BEACH_HOUSE,                 4,  7 ; $CD
 	mapconst UNUSED_MAP_CE,               0,  0 ; $CE
 	mapconst SILPH_CO_2F,                 9, 15 ; $CF
 	mapconst SILPH_CO_3F,                 9, 15 ; $D0
@@ -242,8 +242,8 @@ ENDM
 	mapconst SILPH_CO_10F,                9,  8 ; $EA
 	mapconst SILPH_CO_11F,                9,  9 ; $EB
 	mapconst SILPH_CO_ELEVATOR,           2,  2 ; $EC
-	mapconst UNUSED_MAP_ED,               0,  0 ; $ED
-	mapconst UNUSED_MAP_EE,               0,  0 ; $EE
+	mapconst NAVEL_ROCK_HO_OH_ROOM,      14, 14 ; $ED
+	mapconst NAVEL_ROCK_LUGIA_ROOM,      20, 14 ; $EE
 	mapconst TRADE_CENTER,                4,  5 ; $EF
 	mapconst COLOSSEUM,                   4,  5 ; $F0
 	mapconst UNUSED_MAP_F1,               0,  0 ; $F1

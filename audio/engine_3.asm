@@ -550,7 +550,7 @@ Audio3_executemusic:
 Audio3_octave:
 	and $f0
 	cp $e0 ; is this command an octave?
-	jr nz, Audio3_sfxnote ; no
+	jr nz, Audio3_unknownsfx0x20 ; no
 	ld hl, wChannelOctaves ; yes
 	ld b, $0
 	add hl, bc
@@ -559,18 +559,17 @@ Audio3_octave:
 	ld [hl], a ; store low nibble as octave
 	jp Audio3_endchannel
 
-; sfxnote is either squarenote or noisenote depending on the channel
-Audio3_sfxnote:
-	cp $20 ; is this command an sfxnote?
-	jr nz, Audio3_pitchenvelope ; no
+Audio3_unknownsfx0x20:
+	cp $20 ; is this command an unknownsfx0x20?
+	jr nz, Audio3_unknownsfx0x10 ; no
 	ld a, c
 	cp Ch3 ; is this a noise or sfx channel?
-	jr c, Audio3_pitchenvelope ; no
+	jr c, Audio3_unknownsfx0x10 ; no
 	ld b, $0
 	ld hl, wChannelFlags2
 	add hl, bc
 	bit 0, [hl]
-	jr nz, Audio3_pitchenvelope ; no
+	jr nz, Audio3_unknownsfx0x10 ; no
 	call Audio3_notelength ; yes
 	ld d, a
 	ld b, $0
@@ -605,12 +604,12 @@ Audio3_sfxnote:
 	call Audio3_7d6bf
 	ret
 
-Audio3_pitchenvelope:
+Audio3_unknownsfx0x10:
 	ld a, c
 	cp Ch4
 	jr c, Audio3_note ; if not a sfx
 	ld a, d
-	cp $10 ; is this command an pitchenvelope?
+	cp $10 ; is this command an unknownsfx0x10?
 	jr nz, Audio3_note ; no
 	ld b, $0
 	ld hl, wChannelFlags2

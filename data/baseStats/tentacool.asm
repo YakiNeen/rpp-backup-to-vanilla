@@ -11,18 +11,18 @@ db 105 ; base exp yield
 INCBIN "pic/bmon/tentacool.pic",0,1 ; 55, sprite dimensions
 dw TentacoolPicFront
 dw TentacoolPicBack
-; attacks known at lvl 0
-db ACID
-db 0
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 5,8
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 5 ; growth rate
 ; learnset
 	tmlearn 3,6
 	tmlearn 9,10,11,12,13,14
-	tmlearn 20,21
-	tmlearn 31,32
+	tmlearn 21
+	tmlearn 30,31,32
 	tmlearn 33,34,40
-	tmlearn 44
-	tmlearn 50,51,53
-db 0 ; padding
+	tmlearn 44,45,46
+	tmlearn 49,50,51,53,55
+db BANK(TentacoolPicFront)

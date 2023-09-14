@@ -6,7 +6,7 @@ AnimateHallOfFame:
 	call LoadFontTilePatterns
 	call LoadTextBoxTilePatterns
 	call DisableLCD
-	ld hl, vBGMap0
+	ld hl,vBGMap0
 	ld bc, $800
 	ld a, " "
 	call FillMemory
@@ -33,7 +33,7 @@ AnimateHallOfFame:
 .skipInc
 	ld a, $90
 	ld [hWY], a
-	ld c, BANK(Music_HallOfFame)
+	ld c, 0 ; BANK(Music_HallOfFame)
 	ld a, MUSIC_HALL_OF_FAME
 	call PlayMusic
 	ld hl, wPartySpecies
@@ -78,7 +78,14 @@ AnimateHallOfFame:
 	call AddNTimes
 	ld [hl], $ff
 	call SaveHallOfFameTeams
-	xor a
+	ld a, [wPlayerGender]
+	and a
+	jr z, .male
+	ld a, PLAYER_F
+	jr .female
+.male
+	ld a, PLAYER_M
+.female
 	ld [wHoFMonSpecies], a
 	inc a
 	ld [wHoFMonOrPlayer], a ; player
@@ -92,7 +99,7 @@ AnimateHallOfFame:
 	ret
 
 HallOfFameText:
-	db "HALL OF FAME@"
+	db "Hall of Fame@"
 
 HoFShowMonOrPlayer:
 	call ClearScreen
@@ -117,7 +124,14 @@ HoFShowMonOrPlayer:
 	call LoadFrontSpriteByMonIndex
 	predef LoadMonBackPic
 .next1
+	ld a, [wHoFMonOrPlayer]
+	and a
+	jr z, .mon
+	ld b, SET_PAL_TRAINER_WHOLE_SCREEN
+	jr .player
+.mon
 	ld b, SET_PAL_POKEMON_WHOLE_SCREEN
+.player
 	ld c, 0
 	call RunPaletteCommand
 	ld a, %11100100
@@ -178,13 +192,21 @@ HoFDisplayMonInfo:
 	jp PlayCry
 
 HoFMonInfoText:
-	db   "LEVEL/"
-	next "TYPE1/"
-	next "TYPE2/@"
+	db   "Level"
+	next "Type 1"
+	next "Type 2@"
 
 HoFLoadPlayerPics:
+	ld a, [wPlayerGender] ; New gender check
+	and a      ; New gender check
+	jr nz, .GirlStuff1
 	ld de, RedPicFront
 	ld a, BANK(RedPicFront)
+	jr .Routine ; skip the girl stuff and go to main routine
+.GirlStuff1
+	ld de, LeafPicFront
+	ld a, BANK(LeafPicFront)
+.Routine ; resume original routine
 	call UncompressSpriteFromDE
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
@@ -192,12 +214,22 @@ HoFLoadPlayerPics:
 	call CopyData
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers
+	ld a, [wPlayerGender] ; new gender check
+	and a      ; new gender check
+	jr nz, .GirlStuff2
 	ld de, RedPicBack
 	ld a, BANK(RedPicBack)
+	jr .routine2 ; skip the girl stuff and continue original routine if guy
+.GirlStuff2
+	ld de, LeafPicBack
+	ld a, BANK(LeafPicBack)
+.routine2 ; original routine
 	call UncompressSpriteFromDE
-	predef ScaleSpriteByTwo
+	ld a, $66
 	ld de, vBackPic
-	call InterlaceMergeSpriteBuffers
+	push de
+	jp LoadUncompressedBackSprite
+	nop
 	ld c, $1
 
 HoFLoadMonPlayerPicTileIDs:
@@ -251,10 +283,10 @@ HoFPrintTextAndDelay:
 	jp DelayFrames
 
 HoFPlayTimeText:
-	db "PLAY TIME@"
+	db "Play Time@"
 
 HoFMoneyText:
-	db "MONEY@"
+	db "Money@"
 
 DexSeenOwnedText:
 	TX_FAR _DexSeenOwnedText

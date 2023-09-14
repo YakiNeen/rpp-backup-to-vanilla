@@ -22,6 +22,7 @@ Route8TextPointers:
 	dw Route8Text7
 	dw Route8Text8
 	dw Route8Text9
+	dw Route8Tree1
 	dw Route8Text10
 
 Route8TrainerHeader0:
@@ -272,3 +273,10 @@ Route8AfterBattleText9:
 Route8Text10:
 	TX_FAR _Route8Text10
 	db "@"
+
+Route8Tree1:
+	TX_ASM
+	ld a, 5
+	ld [wWhichTrade], a
+	callba BerryTreeScript
+	jp TextScriptEnd

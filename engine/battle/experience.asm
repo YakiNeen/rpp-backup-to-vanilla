@@ -2,7 +2,7 @@ GainExperience:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
-	call DivideExpDataByNumMonsGainingExp
+;	call DivideExpDataByNumMonsGainingExp
 	ld hl, wPartyMon1
 	xor a
 	ld [wWhichPokemon], a
@@ -21,6 +21,16 @@ GainExperience:
 	and a ; is mon's gain exp flag set?
 	pop hl
 	jp z, .nextMon ; if mon's gain exp flag not set, go to next mon
+	ld a, [wBoostExpByExpAll]
+	and a
+	jp z, .finishedExpAllMessage
+	xor a
+	ld [wBoostExpByExpAll], a
+	push hl
+	ld hl, WithExpAllText
+	call PrintText
+	pop hl
+.finishedExpAllMessage 
 	ld de, (wPartyMon1HPExp + 1) - (wPartyMon1HP + 1)
 	add hl, de
 	ld d, h
@@ -79,8 +89,16 @@ GainExperience:
 	ld a, 0
 	jr z, .next
 .tradedMon
+	push hl
+	ld hl, wExtraFlags
+	bit 2,[hl]
+	pop hl
+	jr nz, .noBoost
 	call BoostExp ; traded mon exp boost
 	ld a, 1
+	jr .next
+.noBoost
+	ld a, 0 ; Makes traded Pokemon act the same as normal ones
 .next
 	ld [wGainBoostedExp], a
 	ld a, [wIsInBattle]
@@ -150,7 +168,7 @@ GainExperience:
 	call PrintText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	call LoadMonData
+	call AnimateEXPBar
 	pop hl
 	ld bc, wPartyMon1Level - wPartyMon1Exp
 	add hl, bc
@@ -158,9 +176,10 @@ GainExperience:
 	callba CalcLevelFromExperience
 	pop hl
 	ld a, [hl] ; current level
+	ld [wTempLevel], a ; store current level
 	cp d
 	jp z, .nextMon ; if level didn't change, go to next mon
-	ld a, [wCurEnemyLVL]
+	call KeepEXPBarFull
 	push af
 	push hl
 	ld a, d
@@ -242,9 +261,9 @@ GainExperience:
 .printGrewLevelText
 	ld hl, GrewLevelText
 	call PrintText
-	xor a ; PLAYER_PARTY_DATA
+	xor a ;PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
-	call LoadMonData
+	call AnimateEXPBarAgain
 	ld d, $1
 	callab PrintStatsBox
 	call WaitForTextScrollButtonPress
@@ -253,7 +272,22 @@ GainExperience:
 	ld [wMonDataLocation], a
 	ld a, [wd0b5]
 	ld [wd11e], a
+	
+	ld a, [wCurEnemyLVL]
+	ld c, a
+	ld a, [wTempLevel]
+	ld b, a
+.level_loop
+	inc b
+	ld a, b
+	ld [wCurEnemyLVL], a
+	push bc
 	predef LearnMoveFromLevelUp
+	pop bc
+	ld a, b
+	cp c
+	jr nz, .level_loop
+	
 	ld hl, wCanEvolveFlags
 	ld a, [wWhichPokemon]
 	ld c, a
@@ -342,10 +376,6 @@ BoostExp:
 GainedText:
 	TX_FAR _GainedText
 	TX_ASM
-	ld a, [wBoostExpByExpAll]
-	ld hl, WithExpAllText
-	and a
-	ret nz
 	ld hl, ExpPointsText
 	ld a, [wGainBoostedExp]
 	and a
@@ -355,9 +385,7 @@ GainedText:
 
 WithExpAllText:
 	TX_FAR _WithExpAllText
-	TX_ASM
-	ld hl, ExpPointsText
-	ret
+	db "@"
 
 BoostedText:
 	TX_FAR _BoostedText

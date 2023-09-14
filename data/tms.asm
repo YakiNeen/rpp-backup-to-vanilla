@@ -1,56 +1,55 @@
-TechnicalMachines:
-	db MEGA_PUNCH
-	db RAZOR_WIND
-	db SWORDS_DANCE
-	db WHIRLWIND
-	db MEGA_KICK
-	db TOXIC
-	db HORN_DRILL
-	db BODY_SLAM
-	db TAKE_DOWN
-	db DOUBLE_EDGE
-	db BUBBLEBEAM
-	db WATER_GUN
-	db ICE_BEAM
-	db BLIZZARD
-	db HYPER_BEAM
-	db PAY_DAY
-	db SUBMISSION
-	db COUNTER
-	db SEISMIC_TOSS
-	db RAGE
-	db MEGA_DRAIN
-	db SOLARBEAM
-	db DRAGON_RAGE
-	db THUNDERBOLT
-	db THUNDER
-	db EARTHQUAKE
-	db FISSURE
-	db DIG
-	db PSYCHIC_M
-	db TELEPORT
-	db MIMIC
-	db DOUBLE_TEAM
-	db REFLECT
-	db BIDE
-	db METRONOME
-	db SELFDESTRUCT
-	db EGG_BOMB
-	db FIRE_BLAST
-	db SWIFT
-	db SKULL_BASH
-	db SOFTBOILED
-	db DREAM_EATER
-	db SKY_ATTACK
-	db REST
-	db THUNDER_WAVE
-	db PSYWAVE
-	db EXPLOSION
-	db ROCK_SLIDE
-	db TRI_ATTACK
-	db SUBSTITUTE
-	db CUT
-	db FLY
-	db SURF
-	db STRENGTH
-	db FLASH
+	db DYNAMICPUNCH ; Safari Zone
+	db DRAGON_CLAW  ; Rocket Hideout, Celadon Dept
+	db SWORDS_DANCE ; Silph Co
+	db STEEL_WING   ; Route 4
+	db MEGA_KICK    ; Celadon Dept
+	db TOXIC        ; Koga Prize
+	db HORN_DRILL   ; Rocket Hideout
+	db BODY_SLAM    ; SS Anne
+	db TAKE_DOWN    ; Silph Co, Celadon Dept
+	db DOUBLE_EDGE  ; Rocket Hideout
+	db WATER_PULSE  ; Misty Prize
+	db MUDDY_WATER  ; Mt Moon
+	db ICE_BEAM     ; Celadon Dept Roof
+	db BLIZZARD     ; Pokemon Mansion
+	db HYPER_BEAM   ; Beach House
+	db IRON_TAIL    ; Route 12
+	db SUBMISSION   ; Celadon Dept
+	db COUNTER      ; Celadon Dept
+	db SEISMIC_TOSS ; Route 25
+	db METAL_CLAW   ; Route 15
+	db GIGA_DRAIN   ; Erika Prize
+	db SOLARBEAM    ; Pokemon Mansion
+	db DRAGONBREATH ; Victory Road
+	db THUNDERBOLT  ; Lt Surge Prize
+	db THUNDER      ; Power Plant
+	db EARTHQUAKE   ; Silph Co
+	db FISSURE      ; Giovanni Prize
+	db DIG          ; Cerulean City
+	db PSYCHIC_M    ; Saffron City
+	db SHADOW_BALL  ; Route 9
+	db MIMIC        ; Saffron City
+	db DOUBLE_TEAM  ; Safari Zone, Celadon Dept
+	db REFLECT      ; Power Plant, Celadon Dept
+	db HEADBUTT     ; Mt Moon, Celadon Dept
+	db ANCIENTPOWER ; Pokemon Lab
+	db ROCK_TOMB    ; Brock Prize
+	db FLAMETHROWER ; Celadon Prize Exchange
+	db FIRE_BLAST   ; Blaine Prize
+	db SWIFT        ; Route 12
+	db SKULL_BASH   ; Safari Zone
+	db AERIAL_ACE   ; Celadon Dept
+	db DREAM_EATER  ; Viridian City
+	db DARK_PULSE   ; Celadon City
+	db REST         ; SS Anne
+	db THUNDER_WAVE ; Route 24
+	db PSYWAVE      ; Sabrina Prize
+	db EXPLOSION    ; Victory Road
+	db ROCK_SLIDE   ; Celadon Dept Roof
+	db DAZZLINGLEAM ; Celadon Dept Roof
+	db FLASH        ; Route 2
+	db CUT          ; SS Anne
+	db FLY          ; Route 16
+	db SURF         ; Safari Zone Secret House
+	db STRENGTH     ; Fuchsia City
+	db DIVE         ; Not available until v3, Sorry

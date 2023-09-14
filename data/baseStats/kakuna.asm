@@ -11,11 +11,11 @@ db 71 ; base exp yield
 INCBIN "pic/bmon/kakuna.pic",0,1 ; 55, sprite dimensions
 dw KakunaPicFront
 dw KakunaPicBack
-; attacks known at lvl 0
-db HARDEN
-db 0
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
 	tmlearn 0
@@ -25,4 +25,4 @@ db 0 ; growth rate
 	tmlearn 0
 	tmlearn 0
 	tmlearn 0
-db 0 ; padding
+db BANK(KakunaPicFront)

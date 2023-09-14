@@ -1,13 +1,35 @@
 DungeonMons2:
+IF DEF(_HARD) ; Difficult Rom
+; Grass Mons
 	db $0F
-	db 51,DODRIO
-	db 51,VENOMOTH
-	db 51,KADABRA
-	db 52,RHYDON
-	db 52,MAROWAK
-	db 52,ELECTRODE
-	db 56,CHANSEY
-	db 54,WIGGLYTUFF
-	db 55,DITTO
+	db 62,CROBAT
+	db 67,CROBAT
+	db 60,GRAVELER
+	db 66,SANDSLASH
+	db 60,RHYHORN
 	db 60,DITTO
+	db 68,ONIX
+	db 68,LICKITUNG
+	db 68,RHYPERIOR
+	db 66,LICKILICKY
+
+; Water Mons
 	db $00
+
+ELSE ; Normal Rom
+; Grass Mons
+	db $0F
+	db 52,CROBAT
+	db 57,CROBAT
+	db 50,GRAVELER
+	db 56,SANDSLASH
+	db 50,RHYHORN
+	db 60,DITTO
+	db 58,ONIX
+	db 58,LICKITUNG
+	db 58,RHYPERIOR
+	db 60,LICKILICKY
+
+; Water Mons
+	db $00
+ENDC

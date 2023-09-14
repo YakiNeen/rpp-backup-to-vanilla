@@ -39,51 +39,58 @@ SuperRodData:
 ; fishing groups
 ; number of monsters, followed by level/monster pairs
 FishingGroup1:
-	db 2
-	db 15,TENTACOOL
-	db 15,POLIWAG
+	db 4
+	db 25,GYARADOS
+	db 25,KINGLER
+	db 25,CLOYSTER
+	db 25,LANTURN
 
 FishingGroup2:
-	db 2
-	db 15,GOLDEEN
-	db 15,POLIWAG
+	db 3
+	db 25,PSYDUCK
+	db 25,SEAKING
+	db 25,KINGLER
 
 FishingGroup3:
-	db 3
-	db 15,PSYDUCK
-	db 15,GOLDEEN
-	db 15,KRABBY
+	db 4
+	db 25,SEADRA
+	db 25,KINGLER
+	db 25,SLOWBRO
+	db 25,GYARADOS
 
 FishingGroup4:
-	db 2
-	db 15,KRABBY
-	db 15,SHELLDER
+	db 4
+	db 25,SEADRA
+	db 25,KINGLER
+	db 25,STARMIE
+	db 25,POLIWHIRL
 
 FishingGroup5:
-	db 2
-	db 23,POLIWHIRL
-	db 15,SLOWPOKE
+	db 3
+	db 25,PSYDUCK
+	db 25,SLOWPOKE
+	db 25,GRIMER
 
 FishingGroup6:
 	db 4
-	db 15,DRATINI
-	db 15,KRABBY
-	db 15,PSYDUCK
-	db 15,SLOWPOKE
+	db 25,DRATINI
+	db 25,KINGLER
+	db 25,GOLDUCK
+	db 25,SLOWKING
 
 FishingGroup7:
 	db 4
-	db 5,TENTACOOL
-	db 15,KRABBY
-	db 15,GOLDEEN
-	db 15,MAGIKARP
+	db 25,TENTACRUEL
+	db 25,KINGLER
+	db 25,SEAKING
+	db 25,GYARADOS
 
 FishingGroup8:
 	db 4
-	db 15,STARYU
-	db 15,HORSEA
-	db 15,SHELLDER
-	db 15,GOLDEEN
+	db 25,STARMIE
+	db 25,SEADRA
+	db 25,CLOYSTER
+	db 25,SEAKING
 
 FishingGroup9:
 	db 4
@@ -95,6 +102,6 @@ FishingGroup9:
 FishingGroup10:
 	db 4
 	db 23,SEAKING
-	db 15,KRABBY
-	db 15,GOLDEEN
-	db 15,MAGIKARP
+	db 25,KINGLER
+	db 25,GOLDUCK
+	db 25,GYARADOS

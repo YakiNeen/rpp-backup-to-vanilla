@@ -17,10 +17,10 @@ CeruleanGymScript_5c6d0:
 	jp LoadGymLeaderAndCityName
 
 Gym2CityName:
-	db "CERULEAN CITY@"
+	db "Cerulean City@"
 
 Gym2LeaderName:
-	db "MISTY@"
+	db "Misty@"
 
 CeruleanGymScript_5c6ed:
 	xor a
@@ -60,9 +60,7 @@ CeruleanGymScript_5c70d:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_5c736
-	ld hl, wObtainedBadges
-	set 1, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 1, [hl]
 
 	; deactivate gym trainers

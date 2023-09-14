@@ -11,18 +11,18 @@ db 203 ; base exp yield
 INCBIN "pic/bmon/cloyster.pic",0,1 ; 77, sprite dimensions
 dw CloysterPicFront
 dw CloysterPicBack
-; attacks known at lvl 0
-db WITHDRAW
-db SUPERSONIC
-db CLAMP
-db AURORA_BEAM
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 5 ; growth rate
 ; learnset
-	tmlearn 6
+	tmlearn 6,7
 	tmlearn 9,10,11,12,13,14,15
-	tmlearn 20
+	tmlearn 0
 	tmlearn 30,31,32
-	tmlearn 33,34,36,39
+	tmlearn 33,39
 	tmlearn 44,47
-	tmlearn 49,50,53
-db 0 ; padding
+	tmlearn 53,55
+db BANK(CloysterPicFront)

@@ -11,18 +11,18 @@ db 55 ; base exp yield
 INCBIN "pic/bmon/pidgey.pic",0,1 ; 55, sprite dimensions
 dw PidgeyPicFront
 dw PidgeyPicBack
-; attacks known at lvl 0
-db GUST
-db 0
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 3 ; growth rate
 ; learnset
-	tmlearn 2,4,6
+	tmlearn 4,6
 	tmlearn 9,10
-	tmlearn 20
+	tmlearn 0
 	tmlearn 31,32
 	tmlearn 33,34,39
-	tmlearn 43,44
-	tmlearn 50,52
-db 0 ; padding
+	tmlearn 41,43,44
+	tmlearn 52
+db BANK(PidgeyPicFront)

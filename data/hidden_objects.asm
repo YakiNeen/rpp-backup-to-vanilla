@@ -198,15 +198,15 @@ RedsHouse2FHiddenObjects:
 	dbw BANK(PrintRedSNESText), PrintRedSNESText
 	db $FF
 BluesHouseHiddenObjects:
-	db $01,$00,$04
-	db BANK(PrintBookcaseText)
-	dw PrintBookcaseText
-	db $01,$01,$04
-	db BANK(PrintBookcaseText)
-	dw PrintBookcaseText
-	db $01,$07,$04
-	db BANK(PrintBookcaseText)
-	dw PrintBookcaseText
+;	db $01,$00,$04
+;	db BANK(PrintBookcaseText)
+;	dw PrintBookcaseText
+;	db $01,$01,$04
+;	db BANK(PrintBookcaseText)
+;	dw PrintBookcaseText
+;	db $01,$07,$04
+;	db BANK(PrintBookcaseText)
+;	dw PrintBookcaseText
 	db $FF
 OaksLabHiddenObjects:
 	db $00,$04,$04
@@ -223,9 +223,6 @@ OaksLabHiddenObjects:
 	dw DisplayOakLabEmailText
 	db $FF
 ViridianPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -261,17 +258,11 @@ PewterGymHiddenObjects:
 PewterMartHiddenObjects:
 	db $FF
 PewterPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
 	db $FF
 CeruleanPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -285,9 +276,6 @@ CeruleanGymHiddenObjects:
 CeruleanMartHiddenObjects:
 	db $FF
 LavenderPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -296,9 +284,6 @@ VermilionPokecenterHiddenObjects:
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
-	db $04,$00,$04
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $FF
 VermilionGymHiddenObjects:
 	db $0e,$03,$04
@@ -344,9 +329,6 @@ CeladonMansion2HiddenObjects:
 	dw OpenPokemonCenterPC
 	db $FF
 CeladonPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -459,17 +441,11 @@ CeladonHotelHiddenObjects:
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $FF
 FuchsiaPokecenterHiddenObjects:
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
-	db $04,$00,$04
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $FF
 FuchsiaGymHiddenObjects:
 	db $0f,$03,$04
@@ -500,9 +476,6 @@ CinnabarGymHiddenObjects:
 	dw PrintCinnabarQuiz
 	db $FF
 CinnabarPokecenterHiddenObjects:
-	db $04,$00,$04
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -512,17 +485,11 @@ SaffronGymHiddenObjects:
 	dbw BANK(GymStatues),GymStatues
 	db $FF
 MtMoonPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
 	db $FF
 RockTunnelPokecenterHiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -588,9 +555,6 @@ RocketHideout4HiddenObjects:
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 SaffronPokecenterHiddenObjects:
-	db $04,$00,$04
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
@@ -606,7 +570,7 @@ Route13HiddenObjects:
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 SafariZoneEntranceHiddenObjects:
-	db $01,$0a,NUGGET
+	db $05,$01,NUGGET
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 SafariZoneWestHiddenObjects:
@@ -658,6 +622,8 @@ Mansion2HiddenObjects:
 	db $0b,$02,$04
 	db BANK(Mansion2Script_Switches)
 	dw Mansion2Script_Switches
+	db $07,$1C,CALCIUM
+	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 Mansion3HiddenObjects:
 	db $09,$01,MAX_REVIVE
@@ -691,7 +657,7 @@ VictoryRoad2HiddenObjects:
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 Unused6FHiddenObjects:
-	db $0b,$0e,MAX_ELIXER
+	db $0C,$11,MAX_ELIXER
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 BillsHouseHiddenObjects:
@@ -703,25 +669,16 @@ ViridianCityHiddenObjects:
 	dbw BANK(HiddenItems),HiddenItems
 	db $FF
 SafariZoneRestHouse2HiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
 	db $FF
 SafariZoneRestHouse3HiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC
 	db $FF
 SafariZoneRestHouse4HiddenObjects:
-	db $04,$00,$08
-	db Bank(PrintBenchGuyText)
-	dw PrintBenchGuyText
 	db $03,$0d,$04
 	db BANK(OpenPokemonCenterPC)
 	dw OpenPokemonCenterPC

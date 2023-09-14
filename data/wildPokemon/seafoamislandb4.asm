@@ -1,27 +1,35 @@
 IslandMonsB4:
+IF DEF(_HARD) ; Difficult Rom
+; Grass Mons
 	db $0A
-	IF DEF(_RED)
-		db 31,HORSEA
-		db 31,SHELLDER
-		db 33,HORSEA
-		db 33,SHELLDER
-		db 29,SLOWPOKE
-		db 31,SEEL
-		db 31,SLOWPOKE
-		db 29,SEEL
-		db 39,SLOWBRO
-		db 32,GOLBAT
-	ENDC
-	IF DEF(_BLUE)
-		db 31,KRABBY
-		db 31,STARYU
-		db 33,KRABBY
-		db 33,STARYU
-		db 29,PSYDUCK
-		db 31,SEEL
-		db 31,PSYDUCK
-		db 29,SEEL
-		db 39,GOLDUCK
-		db 32,GOLBAT
-	ENDC
+	db 46,GOLBAT
+	db 46,ZUBAT
+	db 40,KRABBY
+	db 42,KINGLER
+	db 48,SEEL
+	db 42,SEEL
+	db 47,GOLBAT
+	db 45,ZUBAT
+	db 40,DEWGONG
+	db 44,DEWGONG
+
+; Water Mons
 	db $00
+
+ELSE ; Normal Rom
+; Grass Mons
+	db $0A
+	db 36,GOLBAT
+	db 36,ZUBAT
+	db 30,KRABBY
+	db 32,KINGLER
+	db 28,SEEL
+	db 32,SEEL
+	db 27,GOLBAT
+	db 45,ZUBAT
+	db 30,DEWGONG
+	db 34,DEWGONG
+
+; Water Mons
+	db $00
+ENDC

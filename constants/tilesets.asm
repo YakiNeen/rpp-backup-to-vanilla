@@ -5,7 +5,7 @@ const_value = 0
 	const MART         ; 2
 	const FOREST       ; 3
 	const REDS_HOUSE_2 ; 4
-	const DOJO         ; 5
+	const OAK_TS       ; 5
 	const POKECENTER   ; 6
 	const GYM          ; 7
 	const HOUSE        ; 8
@@ -24,3 +24,7 @@ const_value = 0
 	const CLUB         ; 21
 	const FACILITY     ; 22
 	const PLATEAU      ; 23
+	const SAFARI       ; 24
+	const FERRY        ; 25
+	const ICE_CAVERN   ; 26
+	const MUSEUM_2     ; 27

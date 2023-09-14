@@ -29,8 +29,11 @@ IndigoPlateauLobbyText2:
 	db "@"
 
 IndigoPlateauLobbyText3:
-	TX_FAR _IndigoPlateauLobbyText3
-	db "@"
+	TX_ASM
+	ld a, 6
+	ld [wWhichTrade], a
+	callba MoveTutorScript
+	jp TextScriptEnd
 
 IndigoTradeNurseText:
 	TX_CABLE_CLUB_RECEPTIONIST

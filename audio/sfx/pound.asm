@@ -1,3 +1,3 @@
 SFX_Pound_Ch7:
-	noisenote 2, 10, 1, 34
+	unknownnoise0x20 2, 161, 34
 	endchannel

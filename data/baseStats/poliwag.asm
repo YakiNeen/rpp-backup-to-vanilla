@@ -11,18 +11,18 @@ db 77 ; base exp yield
 INCBIN "pic/bmon/poliwag.pic",0,1 ; 55, sprite dimensions
 dw PoliwagPicFront
 dw PoliwagPicBack
-; attacks known at lvl 0
-db BUBBLE
-db 0
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 3 ; growth rate
 ; learnset
-	tmlearn 6,8
+	tmlearn 1,5,6,8
 	tmlearn 9,10,11,12,13,14
-	tmlearn 20
-	tmlearn 29,31,32
+	tmlearn 17,18,19
+	tmlearn 26,27,28,29,30,31,32
 	tmlearn 34,40
 	tmlearn 44,46
-	tmlearn 50,53
-db 0 ; padding
+	tmlearn 53,54,55
+db BANK(PoliwagPicFront)

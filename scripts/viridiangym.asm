@@ -11,9 +11,9 @@ ViridianGymScript:
 	ret
 
 Gym8CityName:
-	db "VIRIDIAN CITY@"
+	db "Viridian City@"
 Gym8LeaderName:
-	db "GIOVANNI@"
+	db "Unknown@"
 
 ViridianGymScript_748d6:
 	xor a
@@ -154,9 +154,7 @@ ViridianGymScript3_74995:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_749be
-	ld hl, wObtainedBadges
-	set 7, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 7, [hl]
 
 	; deactivate gym trainers

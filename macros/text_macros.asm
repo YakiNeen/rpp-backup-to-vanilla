@@ -26,6 +26,14 @@ TX_BCD: MACRO
 	db \2
 ENDM
 
+TX_CURSOR: MACRO
+; Move cursor to (\1, \2)
+; \1: X coord (0 - 19)
+; \2: Y coord (0 - 17)
+	db $3
+	dwCoord \1, \2
+ENDM
+
 TX_LINE    EQUS "db $05"
 TX_BLINK   EQUS "db $06"
 ;TX_SCROLL EQUS "db $07"
@@ -67,6 +75,8 @@ TX_PRIZE_VENDOR            EQUS "db $f7"
 TX_POKECENTER_PC           EQUS "db $f9"
 TX_PLAYERS_PC              EQUS "db $fc"
 TX_BILLS_PC                EQUS "db $fd"
+
+MART_LIST EQU $FE
 
 TX_MART: MACRO
 	db $FE, _NARG

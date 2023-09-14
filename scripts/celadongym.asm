@@ -17,10 +17,10 @@ CeladonGymScript_48927:
 	jp LoadGymLeaderAndCityName
 
 Gym4CityName:
-	db "CELADON CITY@"
+	db "Celadon City@"
 
 Gym4LeaderName:
-	db "ERIKA@"
+	db "Erika@"
 
 CeladonGymText_48943:
 	xor a
@@ -60,9 +60,7 @@ CeladonGymText_48963:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_4898c
-	ld hl, wObtainedBadges
-	set 3, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 3, [hl]
 
 	; deactivate gym trainers

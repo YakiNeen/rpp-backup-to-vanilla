@@ -8,11 +8,11 @@ FuchsiaHouse1TextPointers:
 	dw FuchsiaHouse1Text3
 
 FuchsiaHouse1Text1:
-	TX_FAR _FuchsiaHouse1Text1
+	TX_FAR MoveDeleterText1
 	db "@"
 
 FuchsiaHouse1Text2:
-	TX_FAR _FuchsiaHouse1Text2
+	TX_FAR MoveRelearnerText1
 	db "@"
 
 FuchsiaHouse1Text3:

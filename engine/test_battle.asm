@@ -7,7 +7,7 @@ TestBattle:
 	; Don't mess around
 	; with obedience.
 	ld a, %10000000 ; EARTHBADGE
-	ld [wObtainedBadges], a
+	ld [wObtainedKantoBadges], a
 
 	ld hl, wFlags_D733
 	set BIT_TEST_BATTLE, [hl]

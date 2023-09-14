@@ -151,5 +151,62 @@ const_value = 1
 	const DEX_DRAGONITE  ; 149
 	const DEX_MEWTWO     ; 150
 	const DEX_MEW        ; 151
+	const DEX_LUGIA      ; 152
+	const DEX_HOUNDOUR   ; 153
+	const DEX_HOUNDOOM   ; 154
+	const DEX_MURKROW    ; 155
+	const DEX_HONCHKROW  ; 156
+	const DEX_HERACROSS  ; 157
+	const DEX_ESPEON     ; 158
+	const DEX_UMBREON    ; 159
+	const DEX_GLACEON    ; 160
+	const DEX_LEAFEON    ; 161
+	const DEX_SYLVEON    ; 162
+	const DEX_SCIZOR     ; 163
+	const DEX_STEELIX    ; 164
+	const DEX_CROBAT     ; 165
+	const DEX_POLITOED   ; 166
+	const DEX_SLOWKING   ; 167
+	const DEX_BELLOSSOM  ; 168
+	const DEX_KINGDRA    ; 169
+	const DEX_BLISSEY    ; 170
+	const DEX_PORYGON2   ; 171
+	const DEX_PORYGONZ   ; 172
+	const DEX_MAGMORTAR  ; 173
+	const DEX_ELECTIVIRE ; 174
+	const DEX_MAGNEZONE  ; 175
+	const DEX_RHYPERIOR  ; 176
+	const DEX_TANGROWTH  ; 177
+	const DEX_LICKILICKY ; 178
+	const DEX_TOGEPI     ; 179
+	const DEX_TOGETIC    ; 180
+	const DEX_TOGEKISS   ; 181
+	const DEX_SNEASEL    ; 182
+	const DEX_WEAVILE    ; 183
+	const DEX_SKARMORY   ; 184
+	const DEX_MISDREAVUS ; 185
+	const DEX_MISMAGIUS  ; 186
+	const DEX_MILTANK    ; 187
+	const DEX_CHINCHOU   ; 188
+	const DEX_LANTURN    ; 189
+	const DEX_SLUGMA     ; 190
+	const DEX_MAGCARGO   ; 191
+	const DEX_TORKOAL    ; 192
+	const DEX_LATIAS     ; 193
+	const DEX_LATIOS     ; 194
+	const DEX_HITMONTOP  ; 195
+	const DEX_TYROGUE    ; 196
+	const DEX_PICHU      ; 197
+	const DEX_CLEFFA     ; 198
+	const DEX_IGGLYBUFF  ; 199
+	const DEX_SMOOCHUM   ; 200
+	const DEX_ELEKID     ; 201
+	const DEX_MAGBY      ; 202
+	const DEX_MIME_JR    ; 203
+	const DEX_HAPPINY    ; 204
+	const DEX_MUNCHLAX   ; 205
+	const DEX_ZIGZAGOON  ; 206
+	const DEX_LINOONE    ; 207
+	const DEX_HO_OH      ; 208
 
-NUM_POKEMON    EQU 151
+NUM_POKEMON    EQU 208

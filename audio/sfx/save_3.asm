@@ -1,36 +1,19 @@
 SFX_Save_3_Ch4:
 	duty 2
-IF DEF(_RED)
-	squarenote 4, 15, 4, 1792
-	squarenote 3, 14, 4, 1664
-	squarenote 3, 14, 4, 1728
-	squarenote 3, 14, 4, 1792
-	squarenote 2, 14, 4, 1952
-ELSE
-	squarenote 3, 14, 4, 1536
-	squarenote 3, 14, 4, 1664
-	squarenote 3, 14, 4, 1728
-	squarenote 3, 14, 4, 1792
-	squarenote 15, 15, 2, 2016
-ENDC
+	unknownsfx0x20 4, 244, 0, 7
+	unknownsfx0x20 3, 228, 128, 6
+	unknownsfx0x20 3, 228, 192, 6
+	unknownsfx0x20 3, 228, 0, 7
+	unknownsfx0x20 2, 228, 160, 7
 	endchannel
 
 
 SFX_Save_3_Ch5:
 	duty 2
-IF DEF(_RED)
-	squarenote 4, 0, 8, 0
-	squarenote 3, 13, 4, 1793
-	squarenote 3, 12, 4, 1665
-	squarenote 3, 12, 4, 1729
-	squarenote 3, 12, 4, 1793
-	squarenote 2, 12, 4, 1953
-ELSE
-	squarenote 3, 0, 8, 0
-	squarenote 3, 12, 4, 1537
-	squarenote 3, 12, 4, 1665
-	squarenote 3, 12, 4, 1729
-	squarenote 3, 12, 4, 1793
-	squarenote 15, 13, 2, 2017
-ENDC
+	unknownsfx0x20 4, 8, 0, 0
+	unknownsfx0x20 3, 212, 1, 7
+	unknownsfx0x20 3, 196, 129, 6
+	unknownsfx0x20 3, 196, 193, 6
+	unknownsfx0x20 3, 196, 1, 7
+	unknownsfx0x20 2, 196, 161, 7
 	endchannel

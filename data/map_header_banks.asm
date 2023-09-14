@@ -11,7 +11,7 @@ MapHeaderBanks:
 	db BANK(CinnabarIsland_h) ; CINNABAR_ISLAND
 	db BANK(IndigoPlateau_h) ; INDIGO_PLATEAU
 	db BANK(SaffronCity_h) ; SAFFRON_CITY
-	db $1 ; unused
+	db BANK(SaffronCity_h) ; unused
 	db BANK(Route1_h) ; ROUTE_1
 	db BANK(Route2_h) ; ROUTE_2
 	db BANK(Route3_h) ; ROUTE_3
@@ -75,7 +75,7 @@ MapHeaderBanks:
 	db BANK(DayCareM_h)
 	db BANK(Route6Gate_h)
 	db BANK(UndergroundPathEntranceRoute6_h)
-	db BANK(UndergroundPathEntranceRoute6_h) ;FREEZE
+	db BANK(UndergroundPathEntranceRoute6_h) ; FREEZE
 	db BANK(Route7Gate_h)
 	db BANK(UndergroundPathEntranceRoute7_h)
 	db BANK(UndergroundPathEntranceRoute7Copy_h) ;FREEZE
@@ -105,19 +105,19 @@ MapHeaderBanks:
 	db BANK(SSAnne8_h)
 	db BANK(SSAnne9_h)
 	db BANK(SSAnne10_h)
-	db $1D ;unused
-	db $1D ;unused
-	db $1D ;unused
+	db BANK(MtMoonSquare_h) ;originally unused
+	db BANK(MtMoonShop_h) ;originally unused
+	db BANK(VermilionFerryDock_h) ; originally unused
 	db BANK(VictoryRoad1_h)
-	db $1D ;unused
-	db $1D ;unused
-	db $1D ;unused
-	db $1D ;unused
+	db BANK(FarawayIslandOutside_h) ;originally unused
+	db BANK(FarawayIslandInside_h)  ;originally unused
+	db BANK(SouthernIslandOutside_h);originally unused
+	db BANK(SouthernIslandInside_h) ;originally unused
 	db BANK(Lance_h)
-	db $1D ;unused
-	db $1D ;unused
-	db $1D ;unused
-	db $1D ;unused
+	db BANK(NavelRockFerryDock_h) ;originally unused
+	db BANK(NavelRockOutside_h) ;originally unused
+	db BANK(NavelRockCave1_h) ;originally unused
+	db BANK(NavelRockCave2_h) ;originally unused
 	db BANK(HallofFameRoom_h)
 	db BANK(UndergroundPathNS_h)
 	db BANK(Gary_h)
@@ -173,7 +173,7 @@ MapHeaderBanks:
 	db BANK(Lab4_h)
 	db BANK(CinnabarPokecenter_h)
 	db BANK(CinnabarMart_h)
-	db BANK(CinnabarMart_h)
+	db BANK(InsideFerry_h)
 	db BANK(IndigoPlateauLobby_h)
 	db BANK(CopycatsHouse1F_h)
 	db BANK(CopycatsHouse2F_h)
@@ -204,8 +204,8 @@ MapHeaderBanks:
 	db BANK(RocketHideout3_h)
 	db BANK(RocketHideout4_h)
 	db BANK(RocketHideoutElevator_h)
-	db $01
-	db $01
+	db BANK(Route19Gate_h)
+	db Bank(BeachHouse_h)
 	db $01
 	db BANK(SilphCo2_h)
 	db BANK(SilphCo3_h)
@@ -238,7 +238,7 @@ MapHeaderBanks:
 	db BANK(SilphCo11_h)
 	db BANK(SilphCoElevator_h)
 	db $11
-	db $11
+	db BANK(NavelRockLugiaRoom_h) ; originally unused
 	db BANK(TradeCenter_h)
 	db BANK(Colosseum_h)
 	db $11

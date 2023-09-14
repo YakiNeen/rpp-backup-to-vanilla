@@ -1,6 +1,6 @@
 UndergroundPathWE_h:
-	db UNDERGROUND ; tileset
-	db UNDERGROUND_PATH_WE_HEIGHT, UNDERGROUND_PATH_WE_WIDTH ; dimensions (y, x)
-	dw UndergroundPathWEBlocks, UndergroundPathWETextPointers, UndergroundPathWEScript ; blocks, texts, scripts
-	db 0 ; connections
-	dw UndergroundPathWEObject ; objects
+	db GATE
+	db UNDERGROUND_PATH_WE_HEIGHT, UNDERGROUND_PATH_WE_WIDTH
+	dw UndergroundPathWEBlocks, UndergroundPathWETextPointers, UndergroundPathWEScript
+	db 0
+	dw UndergroundPathWEObject

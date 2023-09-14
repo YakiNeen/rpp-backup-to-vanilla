@@ -11,18 +11,18 @@ db 69 ; base exp yield
 INCBIN "pic/bmon/meowth.pic",0,1 ; 55, sprite dimensions
 dw MeowthPicFront
 dw MeowthPicBack
-; attacks known at lvl 0
-db SCRATCH
-db GROWL
-db 0
-db 0
+; move tutor compatibility flags
+	m_tutor 5
+	m_tutor 0
+	m_tutor 0
+	m_tutor 0
 db 0 ; growth rate
 ; learnset
 	tmlearn 6,8
 	tmlearn 9,10,11,12,16
 	tmlearn 20,24
-	tmlearn 25,31,32
+	tmlearn 25,28,30,31,32
 	tmlearn 34,39,40
-	tmlearn 44
-	tmlearn 50
-db 0 ; padding
+	tmlearn 41,42,43,44
+	tmlearn 50,51
+db BANK(MeowthPicFront)

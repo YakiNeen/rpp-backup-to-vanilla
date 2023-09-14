@@ -17,10 +17,10 @@ PewterGymScript_5c3a4:
 	jp LoadGymLeaderAndCityName
 
 Gym1CityName:
-	db "PEWTER CITY@"
+	db "Pewter City@"
 
 Gym1LeaderName:
-	db "BROCK@"
+	db "Brock@"
 
 PewterGymScript_5c3bf:
 	xor a
@@ -47,7 +47,7 @@ PewterGymScript_5c3df:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_BROCK
-	lb bc, TM_34, 1
+	lb bc, TM_36, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, $5
@@ -60,9 +60,7 @@ PewterGymScript_5c3df:
 	ld [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .asm_5c408
-	ld hl, wObtainedBadges
-	set 0, [hl]
-	ld hl, wBeatGymFlags
+	ld hl, wObtainedKantoBadges
 	set 0, [hl]
 
 	ld a, HS_GYM_GUY
@@ -182,7 +180,7 @@ PewterGymAfterBattleText1:
 
 PewterGymText3:
 	TX_ASM
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedKantoBadges]
 	bit 0, a
 	jr nz, .asm_5c50c
 	ld hl, PewterGymText_5c515

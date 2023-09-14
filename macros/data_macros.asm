@@ -44,10 +44,10 @@ ENDM
 ; external map entry macro
 EMAP: MACRO ; emap x-coordinate,y-coordinate,textpointer
 ; the appearance of towns and routes in the town map, indexed by map id
-	; nybble: y-coordinate
-	; nybble: x-coordinate
+	; byte  : y-coordinate
+	; byte  : x-coordinate
 	; word  : pointer to map name
-	dn \2, \1
+	db \2, \1
 	dw \3
 ENDM
 
@@ -55,11 +55,11 @@ ENDM
 IMAP: MACRO ; imap mapid_less_than,x-coordinate,y-coordinate,textpointer
 ; the appearance of buildings and dungeons in the town map
 	; byte  : maximum map id subject to this rule
-	; nybble: y-coordinate
-	; nybble: x-coordinate
+	; byte  : y-coordinate
+	; byte  : x-coordinate
 	; word  : pointer to map name
-	db \1 + 1
-	dn \3, \2
+	db \1
+	db \3, \2
 	dw \4
 ENDM
 
@@ -116,28 +116,6 @@ object: MACRO
 			db \6
 		ENDC
 	ENDC
-ENDM
-
-;\1 x position
-;\2 y position
-;\3 destination warp id
-;\4 destination map (-1 = wLastMap)
-warp: MACRO
-	db \2, \1, \3, \4
-ENDM
-
-;\1 x position
-;\2 y position
-;\3 sign id
-sign: MACRO
-	db \2, \1, \3
-ENDM
-
-;\1 x position
-;\2 y position
-;\3 map width
-warp_to: MACRO
-	EVENT_DISP \3, \2, \1
 ENDM
 
 ;\1 (byte) = current map id
@@ -240,3 +218,23 @@ ENDC
 	ENDR
 	db x
 ENDM
+
+m_tutor EQUS "tmlearn" ; works the same way, but renamed for clarity
+
+add_pic: MACRO
+	db BANK(\1)
+	dw \1
+ENDM
+
+moveset: MACRO
+	db \1, \2, \3, \4
+ENDM
+
+tilepal: MACRO
+; vram bank, pals
+x = \1 << 3
+rept _NARG +- 1
+	db (x | PAL_BG_\2)
+	shift
+endr
+endm

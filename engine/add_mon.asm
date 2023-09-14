@@ -73,11 +73,19 @@ _AddPartyMon:
 	inc de
 	pop hl
 	push hl
+	push hl
+	push de
+	push bc
+	callba GetTrainerMonDVs
+	pop bc
+	pop de
+	pop hl
 	ld a, [wMonDataLocation]
 	and $f
-	ld a, $98     ; set enemy trainer mon IVs to fixed average values
-	ld b, $88
-	jr nz, .next4
+	ld a, [wTempDVs + 1]
+	ld b, a
+	ld a, [wTempDVs]
+	jr nz, .writeFreshMonData
 
 ; If the mon is being added to the player's party, update the pokedex.
 	ld a, [wcf91]
@@ -109,13 +117,21 @@ _AddPartyMon:
 	ld a, [wIsInBattle]
 	and a ; is this a wild mon caught in battle?
 	jr nz, .copyEnemyMonData
-
-; Not wild.
-	call Random ; generate random IVs
+;forced shiny giftmon DVs
+	push hl
+	ld hl, wExtraFlags
+	bit 0, [hl]
+	res 0, [hl]
+	pop hl
+	ld a, ATKDEFDV_SHINY
+	ld b, SPDSPCDV_SHINY
+	jr nz,.writeFreshMonData
+;generate random DVS
+	call Random
 	ld b, a
 	call Random
 
-.next4
+.writeFreshMonData
 	push bc
 	ld bc, wPartyMon1DVs - wPartyMon1
 	add hl, bc
@@ -170,18 +186,15 @@ _AddPartyMon:
 	inc de
 	ld a, [hli]       ; catch rate (held item in gen 2)
 	ld [de], a
-	ld hl, wMonHMoves
-	ld a, [hli]
+	; blank moves first
+	xor a
 	inc de
 	push de
 	ld [de], a
-	ld a, [hli]
 	inc de
 	ld [de], a
-	ld a, [hli]
 	inc de
 	ld [de], a
-	ld a, [hli]
 	inc de
 	ld [de], a
 	push de

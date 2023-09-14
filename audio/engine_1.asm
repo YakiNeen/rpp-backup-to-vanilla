@@ -563,7 +563,7 @@ Audio1_executemusic:
 Audio1_octave:
 	and $f0
 	cp $e0 ; is this command an octave?
-	jr nz, Audio1_sfxnote ; no
+	jr nz, Audio1_unknownsfx0x20 ; no
 	ld hl, wChannelOctaves
 	ld b, 0
 	add hl, bc
@@ -572,18 +572,17 @@ Audio1_octave:
 	ld [hl], a ; store low nibble as octave
 	jp Audio1_endchannel
 
-; sfxnote is either squarenote or noisenote depending on the channel
-Audio1_sfxnote:
-	cp $20 ; is this command a sfxnote?
-	jr nz, Audio1_pitchenvelope
+Audio1_unknownsfx0x20:
+	cp $20 ; is this command an unknownsfx0x20?
+	jr nz, Audio1_unknownsfx0x10
 	ld a, c
 	cp Ch3 ; is this a noise or sfx channel?
-	jr c, Audio1_pitchenvelope ; no
+	jr c, Audio1_unknownsfx0x10 ; no
 	ld b, 0
 	ld hl, wChannelFlags2
 	add hl, bc
 	bit BIT_EXECUTE_MUSIC, [hl] ; is executemusic being used?
-	jr nz, Audio1_pitchenvelope ; yes
+	jr nz, Audio1_unknownsfx0x10 ; yes
 	call Audio1_notelength
 
 ; This code seems to do the same thing as what Audio1_ApplyDutyAndSoundLength
@@ -625,12 +624,12 @@ Audio1_sfxnote:
 	call Audio1_ApplyWavePatternAndFrequency
 	ret
 
-Audio1_pitchenvelope:
+Audio1_unknownsfx0x10:
 	ld a, c
 	cp Ch4
 	jr c, Audio1_note ; if not a sfx
 	ld a, d
-	cp $10 ; is this command a pitchenvelope?
+	cp $10 ; is this command a unknownsfx0x10?
 	jr nz, Audio1_note ; no
 	ld b, $0
 	ld hl, wChannelFlags2
